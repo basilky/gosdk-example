@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-version: '2'
+version: "2"
 
 volumes:
   orderer.example.com:
@@ -19,7 +19,7 @@ services:
     image: hyperledger/fabric-ca:$IMAGE_TAG
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-      - FABRIC_CA_SERVER_CA_NAME=ca-org1
+      - FABRIC_CA_SERVER_CA_NAME=ca.org1.example.com
       - FABRIC_CA_SERVER_TLS_ENABLED=true
       - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem
       - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA1_PRIVATE_KEY
@@ -36,7 +36,7 @@ services:
     image: hyperledger/fabric-ca:$IMAGE_TAG
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-      - FABRIC_CA_SERVER_CA_NAME=ca-org2
+      - FABRIC_CA_SERVER_CA_NAME=ca.org2.example.com
       - FABRIC_CA_SERVER_TLS_ENABLED=true
       - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org2.example.com-cert.pem
       - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA2_PRIVATE_KEY
@@ -51,7 +51,7 @@ services:
 
   orderer.example.com:
     extends:
-      file:   base/docker-compose-base.yaml
+      file: base/docker-compose-base.yaml
       service: orderer.example.com
     container_name: orderer.example.com
     networks:
@@ -60,7 +60,7 @@ services:
   peer0.org1.example.com:
     container_name: peer0.org1.example.com
     extends:
-      file:  base/docker-compose-base.yaml
+      file: base/docker-compose-base.yaml
       service: peer0.org1.example.com
     networks:
       - byfn
@@ -68,7 +68,7 @@ services:
   peer1.org1.example.com:
     container_name: peer1.org1.example.com
     extends:
-      file:  base/docker-compose-base.yaml
+      file: base/docker-compose-base.yaml
       service: peer1.org1.example.com
     networks:
       - byfn
@@ -76,7 +76,7 @@ services:
   peer0.org2.example.com:
     container_name: peer0.org2.example.com
     extends:
-      file:  base/docker-compose-base.yaml
+      file: base/docker-compose-base.yaml
       service: peer0.org2.example.com
     networks:
       - byfn
@@ -84,7 +84,7 @@ services:
   peer1.org2.example.com:
     container_name: peer1.org2.example.com
     extends:
-      file:  base/docker-compose-base.yaml
+      file: base/docker-compose-base.yaml
       service: peer1.org2.example.com
     networks:
       - byfn
