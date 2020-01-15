@@ -1,7 +1,11 @@
-.PHONY: all build env-up
+.PHONY: all clean build env-up
 
-all: build env-up run
+all: clean build env-up run
 
+##### CLEAN
+clean:
+	@echo "Clean ..."
+	@rm -rf store
 
 ##### BUILD
 build:

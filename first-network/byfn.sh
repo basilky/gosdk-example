@@ -546,6 +546,8 @@ if [ "$MODE" == "up" ]; then
   EXPMODE="Starting"
 elif [ "$MODE" == "down" ]; then
   EXPMODE="Stopping"
+elif [ "$MODE" == "rm" ]; then
+  EXPMODE="Removing"
 elif [ "$MODE" == "restart" ]; then
   EXPMODE="Restarting"
 elif [ "$MODE" == "generate" ]; then
