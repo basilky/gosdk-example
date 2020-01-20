@@ -25,7 +25,7 @@ logging:
 client:
   # Which organization does this application instance belong to? The value must be the name of an org
   # defined under "organizations"
-  organization: org1
+  organization: org2
 
   logging:
     level: info
@@ -77,12 +77,12 @@ client:
   # Some SDKs support pluggable KV stores, the properties under "credentialStore"
   # are implementation specific
   credentialStore:
-    path: store/credential
+    path: store/org2/credential
 
     # [Optional]. Specific to the CryptoSuite implementation used by GO SDK. Software-based implementations
     # requiring a key store. PKCS#11 based implementations does not.
     cryptoStore:
-      path: store/crypto
+      path: store/org2/crypto
 
     # BCCSP config for the client. Used by GO SDK.
   BCCSP:
