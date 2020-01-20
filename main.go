@@ -26,28 +26,35 @@ func main() {
 	//fmt.Println(mspClient)
 	a := &mspclient.RegistrationRequest{
 		// Name is the unique name of the identity
-		"org1user",
+		Name: "org1user",
 		// Type of identity being registered (e.g. "peer, app, user")
-		"user",
+		Type: "admin",
 		// MaxEnrollments is the number of times the secret can  be reused to enroll.
 		// if omitted, this defaults to max_enrollments configured on the server
-		10,
+		MaxEnrollments: 10,
 		// The identity's affiliation e.g. org1.department1
-		"org1.department1",
+		Affiliation: "org1.department1",
 		// Optional attributes associated with this identity
-		nil,
+		Attributes: nil,
 		// CAName is the name of the CA to connect to
-		"ca.org1.example.com",
+		CAName: "ca.org1.example.com",
 		// Secret is an optional password.  If not specified,
 		// a random secret is generated.  In both cases, the secret
 		// is returned from registration.
-		"",
+		Secret: "",
 	}
 	s, err := mspClient.Register(a)
 	if err != nil {
 		fmt.Println("err", err)
 	}
 	fmt.Println("secret is", s)
+	err = mspClient.Enroll("admin",
+		mspclient.WithSecret("adminpw"),
+		mspclient.WithProfile("tls"),
+	)
+	if err != nil {
+		fmt.Println("err", err)
+	}
 	err = mspClient.Enroll("org1user",
 		mspclient.WithSecret(s),
 		mspclient.WithProfile("tls"),
@@ -56,7 +63,7 @@ func main() {
 		fmt.Println("err", err)
 	}
 	// The resource management client is responsible for managing channels (create/update channel)
-	resourceManagerClientContext := sdk.Context(fabsdk.WithUser("admin"), fabsdk.WithOrg("Org1"))
+	resourceManagerClientContext := sdk.Context(fabsdk.WithUser("org1user"), fabsdk.WithOrg("Org1"))
 	if err != nil {
 		fmt.Println("failed to load Admin identity")
 	}
@@ -66,7 +73,7 @@ func main() {
 	}
 	admin := resMgmtClient
 	fmt.Println("Ressource management client created")
-	adminIdentity, err := mspClient.GetSigningIdentity("admin")
+	adminIdentity, err := mspClient.GetSigningIdentity("org1user")
 	if err != nil {
 		fmt.Println("failed to get admin signing identity")
 	}
