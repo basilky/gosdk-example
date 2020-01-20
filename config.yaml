@@ -248,21 +248,21 @@ peers:
       path: first-network/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
 
   peer1.org1.example.com:
-    url: grpcs://localhost:7056
+    url: grpcs://localhost:8051
     grpcOptions:
       ssl-target-name-override: peer1.org1.example.com
     tlsCACerts:
       path: first-network/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/ca.crt
 
   peer0.org2.example.com:
-    url: grpcs://localhost:8051
+    url: grpcs://localhost:9051
     grpcOptions:
       ssl-target-name-override: peer0.org2.example.com
     tlsCACerts:
       path: first-network/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
 
   peer1.org2.example.com:
-    url: grpcs://localhost:8056
+    url: grpcs://localhost:10051
     eventUrl: grpcs://localhost:8058
     grpcOptions:
       ssl-target-name-override: peer1.org2.example.com
@@ -327,17 +327,17 @@ entityMatchers:
       mappedHost: peer0.org1.example.com
 
     - pattern: peer1.org1.example.(\w+)
-      urlSubstitutionExp: localhost:7056
+      urlSubstitutionExp: localhost:8051
       sslTargetOverrideUrlSubstitutionExp: peer1.org1.example.com
       mappedHost: peer1.org1.example.com
 
     - pattern: peer0.org2.example.(\w+)
-      urlSubstitutionExp: localhost:8051
+      urlSubstitutionExp: localhost:9051
       sslTargetOverrideUrlSubstitutionExp: peer0.org2.example.com
       mappedHost: peer0.org2.example.com
 
     - pattern: peer1.org2.example.(\w+)
-      urlSubstitutionExp: localhost:8056
+      urlSubstitutionExp: localhost:10051
       sslTargetOverrideUrlSubstitutionExp: peer1.org2.example.com
       mappedHost: peer1.org2.example.com
 
