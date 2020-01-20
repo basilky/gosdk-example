@@ -99,7 +99,7 @@ func main() {
 		fmt.Println(err)
 	}
 	mspClient2, err := mspclient.New(
-		sdk.Context(),
+		sdk2.Context(),
 		mspclient.WithOrg("Org2"),
 	)
 	if err != nil {
@@ -137,7 +137,7 @@ func main() {
 	if err != nil {
 		fmt.Println("err", err)
 	}
-	err = mspClient2.Enroll("org1user",
+	err = mspClient2.Enroll("org2user",
 		mspclient.WithSecret(s2),
 		mspclient.WithProfile("tls"),
 	)
@@ -172,5 +172,5 @@ func main() {
 	} else {
 		fmt.Println("Channel joined")
 	}
-	sdk.Close()
+	sdk2.Close()
 }
