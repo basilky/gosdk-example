@@ -181,5 +181,17 @@ func main() {
 	} else {
 		fmt.Println("ccpkg works")
 	}
+	// Install example cc to org peers
+	installCCReq := resmgmt.InstallCCRequest{Name: "mycc", Path: "go-sdk-demo/chaincode/golang", Version: "v0", Package: ccPkg}
+	_, err = admin.InstallCC(installCCReq, resmgmt.WithRetry(retry.DefaultResMgmtOpts))
+	if err != nil {
+		fmt.Println(err, "failed to install chaincode")
+	}
+	installCCReq = resmgmt.InstallCCRequest{Name: "mycc", Path: "go-sdk-demo/chaincode/golang", Version: "v0", Package: ccPkg}
+	_, err = admin2.InstallCC(installCCReq, resmgmt.WithRetry(retry.DefaultResMgmtOpts))
+	if err != nil {
+		fmt.Println(err, "failed to install chaincode")
+	}
+	fmt.Println("Chaincode installed")
 	sdk2.Close()
 }
