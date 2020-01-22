@@ -2,12 +2,14 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	mspclient "github.com/hyperledger/fabric-sdk-go/pkg/client/msp"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/retry"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp"
 	"github.com/hyperledger/fabric-sdk-go/pkg/core/config"
+	packager "github.com/hyperledger/fabric-sdk-go/pkg/fab/ccpackager/gopackager"
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
 )
 
@@ -171,6 +173,13 @@ func main() {
 		fmt.Println("err", err)
 	} else {
 		fmt.Println("Channel joined")
+	}
+	// Create the chaincode package that will be sent to the peers
+	_, err = packager.NewCCPackage("go-sdk-demo/chaincode/golang", os.Getenv("GOPATH"))
+	if err != nil {
+		fmt.Println("failed to create chaincode package", err)
+	} else {
+		fmt.Println("ccpkg works")
 	}
 	sdk2.Close()
 }
