@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	mspproto "github.com/hyperledger/fabric-protos-go/msp"
 	mspclient "github.com/hyperledger/fabric-sdk-go/pkg/client/msp"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/retry"
@@ -11,6 +12,7 @@ import (
 	"github.com/hyperledger/fabric-sdk-go/pkg/core/config"
 	packager "github.com/hyperledger/fabric-sdk-go/pkg/fab/ccpackager/gopackager"
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
+	"github.com/hyperledger/fabric/common/cauthdsl"
 )
 
 func main() {
@@ -175,7 +177,7 @@ func main() {
 		fmt.Println("Channel joined")
 	}
 	// Create the chaincode package that will be sent to the peers
-	_, err = packager.NewCCPackage("go-sdk-demo/chaincode/golang", os.Getenv("GOPATH"))
+	ccPkg, err := packager.NewCCPackage("go-sdk-demo/chaincode/golang", os.Getenv("GOPATH"))
 	if err != nil {
 		fmt.Println("failed to create chaincode package", err)
 	} else {
@@ -193,5 +195,15 @@ func main() {
 		fmt.Println(err, "failed to install chaincode")
 	}
 	fmt.Println("Chaincode installed")
+	// Set up chaincode policy
+	ccPolicy := cauthdsl.SignedByNOutOfGivenRole(2, mspproto.MSPRole_MEMBER, []string{"org1.example.com", "org2.example.com"})
+
+	resp, err := admin2.InstantiateCC("mychannel", resmgmt.InstantiateCCRequest{Name: "mycc", Path: "chaincode/golang", Version: "v0", Args: [][]byte{[]byte("init")}, Policy: ccPolicy})
+	if err != nil || resp.TransactionID == "" {
+		fmt.Println(err, "failed to instantiate the chaincode")
+	}
+	fmt.Println("Chaincode instantiated")
+
+	fmt.Println("Chaincode Installation & Instantiation Successful")
 	sdk2.Close()
 }
