@@ -6,6 +6,7 @@ import (
 
 	mspproto "github.com/hyperledger/fabric-protos-go/msp"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
+	"github.com/hyperledger/fabric-sdk-go/pkg/client/event"
 	mspclient "github.com/hyperledger/fabric-sdk-go/pkg/client/msp"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/retry"
@@ -210,7 +211,7 @@ func main() {
 		// Name is the unique name of the identity
 		Name: "org2normal",
 		// Type of identity being registered (e.g. "peer, app, user")
-		Type: "client",
+		Type: "user",
 		// MaxEnrollments is the number of times the secret can  be reused to enroll.
 		// if omitted, this defaults to max_enrollments configured on the server
 		MaxEnrollments: 10,
@@ -244,5 +245,10 @@ func main() {
 		fmt.Println(err, "failed to create new channel client")
 	}
 	fmt.Println("Channel client created")
+	_, err = event.New(clientContext)
+	if err != nil {
+		fmt.Println(err, "failed to create new event client")
+	}
+	fmt.Println("Event client created")
 	sdk2.Close()
 }
