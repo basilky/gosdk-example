@@ -205,5 +205,29 @@ func main() {
 	fmt.Println("Chaincode instantiated")
 
 	fmt.Println("Chaincode Installation & Instantiation Successful")
+	n := &mspclient.RegistrationRequest{
+		// Name is the unique name of the identity
+		Name: "org2normal",
+		// Type of identity being registered (e.g. "peer, app, user")
+		Type: "client",
+		// MaxEnrollments is the number of times the secret can  be reused to enroll.
+		// if omitted, this defaults to max_enrollments configured on the server
+		MaxEnrollments: 10,
+		// The identity's affiliation e.g. org1.department1
+		Affiliation: "org2.department1",
+		// Optional attributes associated with this identity
+		Attributes: nil,
+		// CAName is the name of the CA to connect to
+		CAName: "ca.org2.example.com",
+		// Secret is an optional password.  If not specified,
+		// a random secret is generated.  In both cases, the secret
+		// is returned from registration.
+		Secret: "",
+	}
+	s3, err := mspClient2.Register(n)
+	if err != nil {
+		fmt.Println("err", err)
+	}
+	fmt.Println("secret is", s3)
 	sdk2.Close()
 }
