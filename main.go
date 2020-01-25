@@ -254,5 +254,7 @@ func main() {
 	transientDataMap["result"] = []byte("Transient data in hello invoke")
 	res, err := client.Execute(channel.Request{ChaincodeID: "mycc", Fcn: "initLedger", Args: nil, TransientMap: transientDataMap})
 	fmt.Println(err, res)
+	response, err := client.Query(channel.Request{ChaincodeID: "mycc", Fcn: "queryAllCars", Args: [][]byte{}}, channel.WithTargetEndpoints("peer1.org1.example.com"))
+	fmt.Println(response, err)
 	sdk2.Close()
 }
