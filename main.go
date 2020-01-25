@@ -211,7 +211,7 @@ func main() {
 		// Name is the unique name of the identity
 		Name: "org2normal",
 		// Type of identity being registered (e.g. "peer, app, user")
-		Type: "user",
+		Type: "client",
 		// MaxEnrollments is the number of times the secret can  be reused to enroll.
 		// if omitted, this defaults to max_enrollments configured on the server
 		MaxEnrollments: 10,
@@ -240,7 +240,7 @@ func main() {
 	}
 	// Channel client is used to query and execute transactions
 	clientContext := sdk2.ChannelContext("mychannel", fabsdk.WithUser("org2normal"))
-	_, err = channel.New(clientContext)
+	client, err := channel.New(clientContext)
 	if err != nil {
 		fmt.Println(err, "failed to create new channel client")
 	}
@@ -250,5 +250,9 @@ func main() {
 		fmt.Println(err, "failed to create new event client")
 	}
 	fmt.Println("Event client created")
+	transientDataMap := make(map[string][]byte)
+	transientDataMap["result"] = []byte("Transient data in hello invoke")
+	res, err := client.Execute(channel.Request{ChaincodeID: "mycc", Fcn: "initLedger", Args: nil, TransientMap: transientDataMap})
+	fmt.Println(err, res)
 	sdk2.Close()
 }
