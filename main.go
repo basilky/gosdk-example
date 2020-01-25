@@ -5,6 +5,7 @@ import (
 	"os"
 
 	mspproto "github.com/hyperledger/fabric-protos-go/msp"
+	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
 	mspclient "github.com/hyperledger/fabric-sdk-go/pkg/client/msp"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/retry"
@@ -229,5 +230,19 @@ func main() {
 		fmt.Println("err", err)
 	}
 	fmt.Println("secret is", s3)
+	err = mspClient2.Enroll("org2normal",
+		mspclient.WithSecret(s3),
+		mspclient.WithProfile("tls"),
+	)
+	if err != nil {
+		fmt.Println("err", err)
+	}
+	// Channel client is used to query and execute transactions
+	clientContext := sdk2.ChannelContext("mychannel", fabsdk.WithUser("org2normal"))
+	_, err = channel.New(clientContext)
+	if err != nil {
+		fmt.Println(err, "failed to create new channel client")
+	}
+	fmt.Println("Channel client created")
 	sdk2.Close()
 }
