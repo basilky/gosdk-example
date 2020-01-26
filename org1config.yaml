@@ -112,12 +112,6 @@ client:
 channels:
   # name of the channel
   mychannel:
-    # Required. list of orderers designated by the application to use for transactions on this
-    # channel. This list can be a result of access control ("org1" can only access "ordererA"), or
-    # operational decisions to share loads from applications among the orderers.  The values must
-    # be "names" of orgs defined under "organizations/peers"
-    orderers:
-      - orderer.example.com
 
     # Required. list of peers from participating orgs
     peers:
@@ -343,11 +337,6 @@ entityMatchers:
 
   orderer:
     - pattern: (\w+).example.(\w+)
-      urlSubstitutionExp: localhost:7050
-      sslTargetOverrideUrlSubstitutionExp: orderer.example.com
-      mappedHost: orderer.example.com
-
-    - pattern: (\w+).example.(\w+):(\d+)
       urlSubstitutionExp: localhost:7050
       sslTargetOverrideUrlSubstitutionExp: orderer.example.com
       mappedHost: orderer.example.com
