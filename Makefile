@@ -1,9 +1,15 @@
 .PHONY: all clean build env-up
 
-all: clean build env-up run
+all: clean env-down build env-up run
+
+##### ENV DOWN
+env-down:
+	@cd first-network && echo y | ./byfn.sh down
+#@cd first-network && echo y | ./byfn.sh rm
 
 ##### CLEAN
 clean:
+	@reset
 	@echo "Clean ..."
 	@rm -rf store
 
@@ -13,7 +19,7 @@ build:
 	@go build -o server
 	@echo "Build done"
 
-##### ENV
+##### ENV UP
 env-up:
 	@echo "Start environment ..."
 	@./startFabric.sh
