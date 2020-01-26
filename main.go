@@ -97,7 +97,6 @@ func main() {
 	} else {
 		fmt.Println("Channel joined")
 	}
-	sdk.Close()
 
 	///////////////////////////////////////////////////////////
 	sdk2, err := fabsdk.New(config.FromFile("org2config.yaml"))
@@ -160,18 +159,7 @@ func main() {
 		fmt.Println("failed to create channel management client from Admin identity")
 	}
 	admin2 := resMgmtClient2
-	fmt.Println("Ressource management client created")
-	adminIdentity2, err := mspClient.GetSigningIdentity("org2user")
-	if err != nil {
-		fmt.Println("failed to get admin signing identity")
-	}
-	req2 := resmgmt.SaveChannelRequest{ChannelID: "mychannel", ChannelConfigPath: "first-network/channel-artifacts/channel.tx", SigningIdentities: []msp.SigningIdentity{adminIdentity2}}
-	txID2, err := admin2.SaveChannel(req2, resmgmt.WithOrdererEndpoint("orderer.example.com"))
-	if err != nil || txID2.TransactionID == "" {
-		fmt.Println("failed to save channel", err)
-	} else {
-		fmt.Println("Channel created")
-	}
+
 	err = admin2.JoinChannel("mychannel", resmgmt.WithRetry(retry.DefaultResMgmtOpts), resmgmt.WithOrdererEndpoint("orderer.example.com"))
 	if err != nil {
 		fmt.Println("err", err)
@@ -189,14 +177,13 @@ func main() {
 	installCCReq := resmgmt.InstallCCRequest{Name: "mycc", Path: "go-sdk-demo/chaincode/golang", Version: "v0", Package: ccPkg}
 	_, err = admin.InstallCC(installCCReq, resmgmt.WithRetry(retry.DefaultResMgmtOpts))
 	if err != nil {
-		fmt.Println(err, "failed to install chaincode")
+		fmt.Println(err, "failed to install chaincode by admin")
 	}
-	installCCReq = resmgmt.InstallCCRequest{Name: "mycc", Path: "go-sdk-demo/chaincode/golang", Version: "v0", Package: ccPkg}
 	_, err = admin2.InstallCC(installCCReq, resmgmt.WithRetry(retry.DefaultResMgmtOpts))
 	if err != nil {
-		fmt.Println(err, "failed to install chaincode")
+		fmt.Println(err, "failed to install chaincode by admin2")
 	}
-	fmt.Println("Chaincode installed")
+	//fmt.Println("Chaincode installed")
 	// Set up chaincode policy
 	ccPolicy := cauthdsl.SignedByNOutOfGivenRole(2, mspproto.MSPRole_MEMBER, []string{"org1.example.com", "org2.example.com"})
 
@@ -252,7 +239,7 @@ func main() {
 	fmt.Println("Event client created")
 	transientDataMap := make(map[string][]byte)
 	transientDataMap["result"] = []byte("Transient data in hello invoke")
-	res, err := client.Execute(channel.Request{ChaincodeID: "mycc", Fcn: "initLedger", Args: nil, TransientMap: transientDataMap})
+	res, err := client.Execute(channel.Request{ChaincodeID: "mycc", Fcn: "initLedger", Args: nil, TransientMap: transientDataMap}, channel.WithTargetEndpoints("peer0.org1.example.com", "peer0.org2.example.com"))
 	fmt.Println(err, res)
 	response, err := client.Query(channel.Request{ChaincodeID: "mycc", Fcn: "queryAllCars", Args: [][]byte{}}, channel.WithTargetEndpoints("peer1.org1.example.com"))
 	fmt.Println(response, err)
