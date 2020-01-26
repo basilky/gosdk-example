@@ -340,8 +340,3 @@ entityMatchers:
       urlSubstitutionExp: localhost:7050
       sslTargetOverrideUrlSubstitutionExp: orderer.example.com
       mappedHost: orderer.example.com
-
-    - pattern: (\w+).example.(\w+):(\d+)
-      urlSubstitutionExp: localhost:7050
-      sslTargetOverrideUrlSubstitutionExp: orderer.example.com
-      mappedHost: orderer.example.com
