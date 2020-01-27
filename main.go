@@ -19,7 +19,7 @@ import (
 
 func main() {
 
-	sdk, err := fabsdk.New(config.FromFile("org1config.yaml"))
+	sdk, err := fabsdk.New(config.FromFile("configs/org1config.yaml"))
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -99,7 +99,7 @@ func main() {
 	}
 
 	///////////////////////////////////////////////////////////
-	sdk2, err := fabsdk.New(config.FromFile("org2config.yaml"))
+	sdk2, err := fabsdk.New(config.FromFile("configs/org2config.yaml"))
 	if err != nil {
 		fmt.Println(err)
 	}
