@@ -84,7 +84,7 @@ func main() {
 	if err != nil {
 		fmt.Println("failed to get admin signing identity")
 	}
-	req := resmgmt.SaveChannelRequest{ChannelID: "mychannel", ChannelConfigPath: "first-network/channel-artifacts/channel.tx", SigningIdentities: []msp.SigningIdentity{adminIdentity}}
+	req := resmgmt.SaveChannelRequest{ChannelID: "mychannel", ChannelConfigPath: "network/channel-artifacts/channel.tx", SigningIdentities: []msp.SigningIdentity{adminIdentity}}
 	txID, err := admin.SaveChannel(req, resmgmt.WithOrdererEndpoint("orderer.example.com"))
 	if err != nil || txID.TransactionID == "" {
 		fmt.Println("failed to save channel", err)

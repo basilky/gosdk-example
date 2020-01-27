@@ -4,8 +4,8 @@ all: clean env-down build env-up run
 
 ##### ENV DOWN
 env-down:
-	@cd first-network && echo y | ./byfn.sh down
-#@cd first-network && echo y | ./byfn.sh rm
+	@cd network && echo y | ./byfn.sh down
+#@cd network && echo y | ./byfn.sh rm
 
 ##### CLEAN
 clean:

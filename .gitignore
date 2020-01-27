@@ -1,7 +1,7 @@
 go.sum
 server
-first-network/connection-org1.json
-first-network/connection-org1.yaml
-first-network/connection-org2.json
-first-network/connection-org2.yaml
+network/connection-org1.json
+network/connection-org1.yaml
+network/connection-org2.json
+network/connection-org2.yaml
 store
