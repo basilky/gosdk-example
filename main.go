@@ -21,38 +21,22 @@ import (
 
 func main() {
 
-	sdk, err := sdkconnector.CreateSDKInstance("org1")
+	Org1SDK, err := sdkconnector.CreateSDKInstance("Org1")
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("error creating sdk instance for Org1 : ", err)
 	}
-	mspClient, err := mspclient.New(
-		sdk.Context(),
-		mspclient.WithOrg("Org1"),
-	)
+	Org1MSPClient, err := mspclient.New(Org1SDK.Context(), mspclient.WithOrg("Org1"))
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("error creating MSP client for Org1 : ", err)
 	}
-	//fmt.Println(mspClient)
-	a := &mspclient.RegistrationRequest{
-		// Name is the unique name of the identity
-		Name: "org1user",
-		// Type of identity being registered (e.g. "peer, app, user")
-		Type: "admin",
-		// MaxEnrollments is the number of times the secret can  be reused to enroll.
-		// if omitted, this defaults to max_enrollments configured on the server
+	Org1Admn := &mspclient.RegistrationRequest{
+		Name:           "org1admin",
+		Type:           "admin",
 		MaxEnrollments: 10,
-		// The identity's affiliation e.g. org1.department1
-		Affiliation: "org1.department1",
-		// Optional attributes associated with this identity
-		Attributes: nil,
-		// CAName is the name of the CA to connect to
-		CAName: "ca.org1.example.com",
-		// Secret is an optional password.  If not specified,
-		// a random secret is generated.  In both cases, the secret
-		// is returned from registration.
-		Secret: "",
+		Affiliation:    "org1.department1",
+		CAName:         "ca.org1.example.com",
 	}
-	s, err := mspClient.Register(a)
+	s, err := Org1MSPClient.Register(Org1Admn)
 	if err != nil {
 		fmt.Println("err", err)
 	}
