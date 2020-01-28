@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 
+	"gosdk-example/sdkconnector"
+
 	mspproto "github.com/hyperledger/fabric-protos-go/msp"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/event"
@@ -19,7 +21,7 @@ import (
 
 func main() {
 
-	sdk, err := fabsdk.New(config.FromFile("configs/org1config.yaml"))
+	sdk, err := sdkconnector.CreateSDKInstance("org1")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -167,14 +169,14 @@ func main() {
 		fmt.Println("Channel joined")
 	}
 	// Create the chaincode package that will be sent to the peers
-	ccPkg, err := packager.NewCCPackage("go-sdk-demo/chaincode/golang", os.Getenv("GOPATH"))
+	ccPkg, err := packager.NewCCPackage("gosdk-example/chaincode/golang", os.Getenv("GOPATH"))
 	if err != nil {
 		fmt.Println("failed to create chaincode package", err)
 	} else {
 		fmt.Println("ccpkg works")
 	}
 	// Install example cc to org peers
-	installCCReq := resmgmt.InstallCCRequest{Name: "mycc", Path: "go-sdk-demo/chaincode/golang", Version: "v0", Package: ccPkg}
+	installCCReq := resmgmt.InstallCCRequest{Name: "mycc", Path: "gosdk-example/chaincode/golang", Version: "v0", Package: ccPkg}
 	_, err = admin.InstallCC(installCCReq, resmgmt.WithRetry(retry.DefaultResMgmtOpts))
 	if err != nil {
 		fmt.Println(err, "failed to install chaincode by admin")

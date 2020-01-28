@@ -1,5 +1,3 @@
-module fabric-sdk-demo/go-sdk-demo
-
 go 1.11
 
 require (
@@ -11,3 +9,5 @@ require (
 	github.com/sykesm/zap-logfmt v0.0.3 // indirect
 	go.uber.org/zap v1.13.0 // indirect
 )
+
+module gosdk-example
