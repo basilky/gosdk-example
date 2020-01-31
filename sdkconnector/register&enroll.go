@@ -4,12 +4,12 @@ import (
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/msp"
 )
 
-func ResgisterandEnroll(org string, r *msp.RegistrationRequest) error {
-	sdk, err := CreateSDKInstance(org)
+func ResgisterandEnroll(orgname string, r *msp.RegistrationRequest) error {
+	sdk, err := CreateSDKInstance(orgname)
 	if err != nil {
 		return err
 	}
-	MSPClient, err := msp.New(sdk.Context(), msp.WithOrg(org))
+	MSPClient, err := msp.New(sdk.Context(), msp.WithOrg(orgname))
 	if err != nil {
 		return err
 	}
