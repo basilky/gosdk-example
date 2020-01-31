@@ -2,9 +2,8 @@ package main
 
 import (
 	"fmt"
-	"os"
-
 	"gosdk-example/sdkconnector"
+	"os"
 
 	mspproto "github.com/hyperledger/fabric-protos-go/msp"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
@@ -20,41 +19,15 @@ import (
 )
 
 func main() {
-
-	Org1SDK, err := sdkconnector.CreateSDKInstance("Org1")
-	if err != nil {
-		fmt.Println("error creating sdk instance for Org1 : ", err)
-	}
-	Org1MSPClient, err := mspclient.New(Org1SDK.Context(), mspclient.WithOrg("Org1"))
-	if err != nil {
-		fmt.Println("error creating MSP client for Org1 : ", err)
-	}
-	Org1Admn := &mspclient.RegistrationRequest{
+	//Register and enroll admn user for Org1
+	Org1Admin := &mspclient.RegistrationRequest{
 		Name:           "org1admin",
 		Type:           "admin",
 		MaxEnrollments: 10,
 		Affiliation:    "org1.department1",
 		CAName:         "ca.org1.example.com",
 	}
-	s, err := Org1MSPClient.Register(Org1Admn)
-	if err != nil {
-		fmt.Println("err", err)
-	}
-	fmt.Println("secret is", s)
-	err = mspClient.Enroll("admin",
-		mspclient.WithSecret("adminpw"),
-		mspclient.WithProfile("tls"),
-	)
-	if err != nil {
-		fmt.Println("err", err)
-	}
-	err = mspClient.Enroll("org1user",
-		mspclient.WithSecret(s),
-		mspclient.WithProfile("tls"),
-	)
-	if err != nil {
-		fmt.Println("err", err)
-	}
+	sdkconnector.ResgisterandEnroll("Org1", Org1Admin)
 	// The resource management client is responsible for managing channels (create/update channel)
 	resourceManagerClientContext := sdk.Context(fabsdk.WithUser("org1user"), fabsdk.WithOrg("Org1"))
 	if err != nil {
