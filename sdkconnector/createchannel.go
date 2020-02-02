@@ -24,15 +24,16 @@ func CreateChennel(orgname string, username string, channelid string, channelcon
 	if err != nil {
 		return err
 	}
-	adminIdentity, err := MSPClient.GetSigningIdentity("org1user")
+	adminIdentity, err := MSPClient.GetSigningIdentity(username)
 	if err != nil {
 		return err
 	}
-	req := resmgmt.SaveChannelRequest{ChannelID: "mychannel", ChannelConfigPath: "network/channel-artifacts/channel.tx", SigningIdentities: []providersmsp.SigningIdentity{adminIdentity}}
+	req := resmgmt.SaveChannelRequest{ChannelID: channelid, ChannelConfigPath: channelconfigpath, SigningIdentities: []providersmsp.SigningIdentity{adminIdentity}}
 	txID, err := resMgmtClient.SaveChannel(req, resmgmt.WithOrdererEndpoint("orderer.example.com"))
 	if err != nil || txID.TransactionID == "" {
 		return err
 	} else {
+		sdk.Close()
 		return nil
 	}
 }
