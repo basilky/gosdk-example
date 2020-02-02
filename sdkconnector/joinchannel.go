@@ -22,5 +22,6 @@ func JoinChennel(orgname string, username string, channelname string) error {
 	if err != nil {
 		fmt.Println("err", err)
 	}
+	sdk.Close()
 	return nil
 }
