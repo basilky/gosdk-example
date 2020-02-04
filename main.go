@@ -67,38 +67,19 @@ func main() {
 	fmt.Println("Chaincode instantiated")
 
 	fmt.Println("Chaincode Installation & Instantiation Successful")
+	//Register and enroll admn user on Org2
+	Org2User := &mspclient.RegistrationRequest{
+		Name:           "org2user",
+		Type:           "client",
+		MaxEnrollments: 10,
+		Affiliation:    "org2.department1",
+		CAName:         "ca.org2.example.com",
+	}
+	err = sdkconnector.ResgisterandEnroll("Org2", Org2User)
+	if err != nil {
+		fmt.Println("error on registering and enrolling org2user user for Org2 : ", err)
+	}
 	/*
-		n := &mspclient.RegistrationRequest{
-			// Name is the unique name of the identity
-			Name: "org2normal",
-			// Type of identity being registered (e.g. "peer, app, user")
-			Type: "client",
-			// MaxEnrollments is the number of times the secret can  be reused to enroll.
-			// if omitted, this defaults to max_enrollments configured on the server
-			MaxEnrollments: 10,
-			// The identity's affiliation e.g. org1.department1
-			Affiliation: "org2.department1",
-			// Optional attributes associated with this identity
-			Attributes: nil,
-			// CAName is the name of the CA to connect to
-			CAName: "ca.org2.example.com",
-			// Secret is an optional password.  If not specified,
-			// a random secret is generated.  In both cases, the secret
-			// is returned from registration.
-			Secret: "",
-		}
-		s3, err := mspClient2.Register(n)
-		if err != nil {
-			fmt.Println("err", err)
-		}
-		fmt.Println("secret is", s3)
-		err = mspClient2.Enroll("org2normal",
-			mspclient.WithSecret(s3),
-			mspclient.WithProfile("tls"),
-		)
-		if err != nil {
-			fmt.Println("err", err)
-		}
 		// Channel client is used to query and execute transactions
 		clientContext := sdk2.ChannelContext("mychannel", fabsdk.WithUser("org2normal"))
 		client, err := channel.New(clientContext)
