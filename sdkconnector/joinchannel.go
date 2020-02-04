@@ -18,6 +18,5 @@ func JoinChennel(sdk *fabsdk.FabricSDK, orgname string, username string, channel
 	if err != nil {
 		fmt.Println("err", err)
 	}
-	sdk.Close()
 	return nil
 }

@@ -21,6 +21,5 @@ func ResgisterandEnroll(sdk *fabsdk.FabricSDK, orgname string, r *msp.Registrati
 	if err != nil {
 		return err
 	}
-	sdk.Close()
 	return nil
 }

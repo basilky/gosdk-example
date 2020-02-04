@@ -16,6 +16,5 @@ func InstantiateCC(sdk *fabsdk.FabricSDK, orgname string, username string, chann
 	if err != nil || resp.TransactionID == "" {
 		return err
 	}
-	sdk.Close()
 	return nil
 }

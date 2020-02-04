@@ -24,6 +24,5 @@ func InstallCC(sdk *fabsdk.FabricSDK, orgname string, username string, chaincode
 	if err != nil {
 		return err
 	}
-	sdk.Close()
 	return nil
 }

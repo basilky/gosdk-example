@@ -26,7 +26,6 @@ func CreateChennel(sdk *fabsdk.FabricSDK, orgname string, username string, chann
 	if err != nil || txID.TransactionID == "" {
 		return err
 	} else {
-		sdk.Close()
 		return nil
 	}
 }
