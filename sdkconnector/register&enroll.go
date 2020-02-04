@@ -2,13 +2,10 @@ package sdkconnector
 
 import (
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/msp"
+	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
 )
 
-func ResgisterandEnroll(orgname string, r *msp.RegistrationRequest) error {
-	sdk, err := CreateSDKInstance(orgname)
-	if err != nil {
-		return err
-	}
+func ResgisterandEnroll(sdk *fabsdk.FabricSDK, orgname string, r *msp.RegistrationRequest) error {
 	MSPClient, err := msp.New(sdk.Context(), msp.WithOrg(orgname))
 	if err != nil {
 		return err

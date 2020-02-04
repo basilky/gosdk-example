@@ -7,15 +7,8 @@ import (
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
 )
 
-func CreateChennel(orgname string, username string, channelid string, channelconfigpath string) error {
-	sdk, err := CreateSDKInstance(orgname)
-	if err != nil {
-		return err
-	}
+func CreateChennel(sdk *fabsdk.FabricSDK, orgname string, username string, channelid string, channelconfigpath string) error {
 	resourceManagerClientContext := sdk.Context(fabsdk.WithUser(username), fabsdk.WithOrg(orgname))
-	if err != nil {
-		return err
-	}
 	resMgmtClient, err := resmgmt.New(resourceManagerClientContext)
 	if err != nil {
 		return err
