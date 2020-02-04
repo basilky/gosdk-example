@@ -5,12 +5,8 @@ import (
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
 )
 
-func InstantiateCC(orgname string, username string, channelname string, r resmgmt.InstantiateCCRequest) error {
+func InstantiateCC(sdk *fabsdk.FabricSDK, orgname string, username string, channelname string, r resmgmt.InstantiateCCRequest) error {
 
-	sdk, err := CreateSDKInstance(orgname)
-	if err != nil {
-		return err
-	}
 	resourceManagerClientContext := sdk.Context(fabsdk.WithUser(username), fabsdk.WithOrg(orgname))
 	resMgmtClient, err := resmgmt.New(resourceManagerClientContext)
 	if err != nil {

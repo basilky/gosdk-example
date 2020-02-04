@@ -32,6 +32,8 @@ func main() {
 	if err != nil {
 		fmt.Println("error joining Org1 peers to channel : ", err)
 	}
+	////////////////////////////////
+	Org2SDK, _ := sdkconnector.CreateSDKInstance("Org2")
 	//Register and enroll admn user on Org2
 	Org2Admin := &mspclient.RegistrationRequest{
 		Name:           "org2admin",
@@ -40,20 +42,20 @@ func main() {
 		Affiliation:    "org2.department1",
 		CAName:         "ca.org2.example.com",
 	}
-	err = sdkconnector.ResgisterandEnroll("Org2", Org2Admin)
+	err = sdkconnector.ResgisterandEnroll(Org2SDK, "Org2", Org2Admin)
 	if err != nil {
 		fmt.Println("error on registering and enrolling admin user for Org2 : ", err)
 	}
-	err = sdkconnector.JoinChennel("Org2", "org2admin", "mychannel")
+	err = sdkconnector.JoinChennel(Org2SDK, "Org2", "org2admin", "mychannel")
 	if err != nil {
 		fmt.Println("error joining Org2 peers to channel : ", err)
 	}
 
-	err = sdkconnector.InstallCC("Org1", "org1admin", "gosdk-example/chaincode/golang", "mycc", "v0")
+	err = sdkconnector.InstallCC(Org1SDK, "Org1", "org1admin", "gosdk-example/chaincode/golang", "mycc", "v0")
 	if err != nil {
 		fmt.Println("erro1")
 	}
-	err = sdkconnector.InstallCC("Org2", "org2admin", "gosdk-example/chaincode/golang", "mycc", "v0")
+	err = sdkconnector.InstallCC(Org2SDK, "Org2", "org2admin", "gosdk-example/chaincode/golang", "mycc", "v0")
 	if err != nil {
 		fmt.Println("erro2")
 	}
@@ -61,7 +63,7 @@ func main() {
 	// Set up chaincode policy
 	ccPolicy := cauthdsl.SignedByNOutOfGivenRole(2, mspproto.MSPRole_MEMBER, []string{"org1.example.com", "org2.example.com"})
 	instCCrequest := resmgmt.InstantiateCCRequest{Name: "mycc", Path: "chaincode/golang", Version: "v0", Args: [][]byte{[]byte("init")}, Policy: ccPolicy}
-	err = sdkconnector.InstantiateCC("Org1", "org1admin", "mychannel", instCCrequest)
+	err = sdkconnector.InstantiateCC(Org1SDK, "Org1", "org1admin", "mychannel", instCCrequest)
 	if err != nil {
 		fmt.Println(err, "failed to instantiate the chaincode")
 	}
@@ -76,7 +78,7 @@ func main() {
 		Affiliation:    "org2.department1",
 		CAName:         "ca.org2.example.com",
 	}
-	err = sdkconnector.ResgisterandEnroll("Org2", Org2User)
+	err = sdkconnector.ResgisterandEnroll(Org1SDK, "Org2", Org2User)
 	if err != nil {
 		fmt.Println("error on registering and enrolling org2user user for Org2 : ", err)
 	}

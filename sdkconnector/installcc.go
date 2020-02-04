@@ -9,12 +9,7 @@ import (
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
 )
 
-func InstallCC(orgname string, username string, chaincodepath string, chaincodename string, chaincodeversion string) error {
-
-	sdk, err := CreateSDKInstance(orgname)
-	if err != nil {
-		return err
-	}
+func InstallCC(sdk *fabsdk.FabricSDK, orgname string, username string, chaincodepath string, chaincodename string, chaincodeversion string) error {
 	resourceManagerClientContext := sdk.Context(fabsdk.WithUser(username), fabsdk.WithOrg(orgname))
 	resMgmtClient, err := resmgmt.New(resourceManagerClientContext)
 	if err != nil {
