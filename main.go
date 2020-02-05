@@ -5,8 +5,10 @@ import (
 	"gosdk-example/sdkconnector"
 
 	mspproto "github.com/hyperledger/fabric-protos-go/msp"
+	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
 	mspclient "github.com/hyperledger/fabric-sdk-go/pkg/client/msp"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt"
+	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
 	"github.com/hyperledger/fabric/common/cauthdsl"
 )
 
@@ -63,7 +65,7 @@ func main() {
 	// Set up chaincode policy
 	ccPolicy := cauthdsl.SignedByNOutOfGivenRole(2, mspproto.MSPRole_MEMBER, []string{"org1.example.com", "org2.example.com"})
 	instCCrequest := resmgmt.InstantiateCCRequest{Name: "mycc", Path: "chaincode/golang", Version: "v0", Args: [][]byte{[]byte("init")}, Policy: ccPolicy}
-	err = sdkconnector.InstantiateCC(Org1SDK, "Org1", "org1admin", "mychannel", instCCrequest)
+	err = sdkconnector.InstantiateCC(Org2SDK, "Org2", "org2admin", "mychannel", instCCrequest)
 	if err != nil {
 		fmt.Println(err, "failed to instantiate the chaincode")
 	}
@@ -78,28 +80,21 @@ func main() {
 		Affiliation:    "org2.department1",
 		CAName:         "ca.org2.example.com",
 	}
-	err = sdkconnector.ResgisterandEnroll(Org1SDK, "Org2", Org2User)
+	err = sdkconnector.ResgisterandEnroll(Org2SDK, "Org2", Org2User)
 	if err != nil {
 		fmt.Println("error on registering and enrolling org2user user for Org2 : ", err)
 	}
-	/*
-		// Channel client is used to query and execute transactions
-		clientContext := sdk2.ChannelContext("mychannel", fabsdk.WithUser("org2normal"))
-		client, err := channel.New(clientContext)
-		if err != nil {
-			fmt.Println(err, "failed to create new channel client")
-		}
-		fmt.Println("Channel client created")
-		_, err = event.New(clientContext)
-		if err != nil {
-			fmt.Println(err, "failed to create new event client")
-		}
-		fmt.Println("Event client created")
-		transientDataMap := make(map[string][]byte)
-		transientDataMap["result"] = []byte("Transient data in hello invoke")
-		res, err := client.Execute(channel.Request{ChaincodeID: "mycc", Fcn: "initLedger", Args: nil, TransientMap: transientDataMap}, channel.WithTargetEndpoints("peer0.org1.example.com", "peer0.org2.example.com"))
-		fmt.Println(err, res)
-		response, err := client.Query(channel.Request{ChaincodeID: "mycc", Fcn: "queryAllCars", Args: [][]byte{}}, channel.WithTargetEndpoints("peer1.org1.example.com"))
-		fmt.Println(response, err)
-		sdk2.Close()*/
+
+	// Channel client is used to query and execute transactions
+	clientContext := Org2SDK.ChannelContext("mychannel", fabsdk.WithUser("org2user"))
+	client, err := channel.New(clientContext)
+	if err != nil {
+		fmt.Println(err, "failed to create new channel client")
+	}
+
+	res, err := client.Execute(channel.Request{ChaincodeID: "mycc", Fcn: "initLedger", Args: nil, TransientMap: nil}, channel.WithTargetEndpoints("peer0.org1.example.com", "peer0.org2.example.com"))
+	fmt.Println(err, res.TransactionID)
+	response, err := client.Query(channel.Request{ChaincodeID: "mycc", Fcn: "queryAllCars", Args: [][]byte{}}, channel.WithTargetEndpoints("peer1.org1.example.com"))
+	fmt.Println(response, err)
+	fmt.Println(string(response.Payload))
 }
