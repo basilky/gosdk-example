@@ -93,8 +93,15 @@ func main() {
 	}
 
 	res, err := client.Execute(channel.Request{ChaincodeID: "mycc", Fcn: "initLedger", Args: nil, TransientMap: nil}, channel.WithTargetEndpoints("peer0.org1.example.com", "peer0.org2.example.com"))
-	fmt.Println(err, res.TransactionID)
+	if err != nil {
+		fmt.Println("Transaction success, ID : ", res.TransactionID)
+	} else {
+		fmt.Println("Error execute transaction : ", err)
+	}
 	response, err := client.Query(channel.Request{ChaincodeID: "mycc", Fcn: "queryAllCars", Args: [][]byte{}}, channel.WithTargetEndpoints("peer1.org1.example.com"))
-	fmt.Println(response, err)
-	fmt.Println(string(response.Payload))
+	if err != nil {
+		fmt.Println("Query Resaponse : ", string(response.Payload))
+	} else {
+		fmt.Println("Error : ", err)
+	}
 }
