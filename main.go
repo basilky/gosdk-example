@@ -25,14 +25,17 @@ func main() {
 	err := sdkconnector.ResgisterandEnroll(Org1SDK, "Org1", Org1Admin)
 	if err != nil {
 		fmt.Println("error on registering and enrolling admin user for Org1 : ", err)
+		return
 	}
 	sdkconnector.CreateChennel(Org1SDK, "Org1", "org1admin", "mychannel", "network/channel-artifacts/channel.tx")
 	if err != nil {
 		fmt.Println("error creating channel : ", err)
+		return
 	}
 	err = sdkconnector.JoinChennel(Org1SDK, "Org1", "org1admin", "mychannel")
 	if err != nil {
 		fmt.Println("error joining Org1 peers to channel : ", err)
+		return
 	}
 	////////////////////////////////
 	Org2SDK, _ := sdkconnector.CreateSDKInstance("Org2")
@@ -47,19 +50,23 @@ func main() {
 	err = sdkconnector.ResgisterandEnroll(Org2SDK, "Org2", Org2Admin)
 	if err != nil {
 		fmt.Println("error on registering and enrolling admin user for Org2 : ", err)
+		return
 	}
 	err = sdkconnector.JoinChennel(Org2SDK, "Org2", "org2admin", "mychannel")
 	if err != nil {
 		fmt.Println("error joining Org2 peers to channel : ", err)
+		return
 	}
 
 	err = sdkconnector.InstallCC(Org1SDK, "Org1", "org1admin", "gosdk-example/chaincode/golang", "mycc", "v0")
 	if err != nil {
 		fmt.Println("erro1")
+		return
 	}
 	err = sdkconnector.InstallCC(Org2SDK, "Org2", "org2admin", "gosdk-example/chaincode/golang", "mycc", "v0")
 	if err != nil {
 		fmt.Println("erro2")
+		return
 	}
 
 	// Set up chaincode policy
@@ -68,6 +75,7 @@ func main() {
 	err = sdkconnector.InstantiateCC(Org2SDK, "Org2", "org2admin", "mychannel", instCCrequest)
 	if err != nil {
 		fmt.Println(err, "failed to instantiate the chaincode")
+		return
 	}
 	fmt.Println("Chaincode instantiated")
 
@@ -83,6 +91,7 @@ func main() {
 	err = sdkconnector.ResgisterandEnroll(Org2SDK, "Org2", Org2User)
 	if err != nil {
 		fmt.Println("error on registering and enrolling org2user user for Org2 : ", err)
+		return
 	}
 
 	// Channel client is used to query and execute transactions
@@ -90,6 +99,7 @@ func main() {
 	client, err := channel.New(clientContext)
 	if err != nil {
 		fmt.Println(err, "failed to create new channel client")
+		return
 	}
 
 	res, err := client.Execute(channel.Request{ChaincodeID: "mycc", Fcn: "initLedger", Args: nil, TransientMap: nil}, channel.WithTargetEndpoints("peer0.org1.example.com", "peer0.org2.example.com"))
@@ -97,11 +107,13 @@ func main() {
 		fmt.Println("Transaction success, ID : ", res.TransactionID)
 	} else {
 		fmt.Println("Error execute transaction : ", err)
+		return
 	}
 	response, err := client.Query(channel.Request{ChaincodeID: "mycc", Fcn: "queryAllCars", Args: [][]byte{}}, channel.WithTargetEndpoints("peer1.org1.example.com"))
 	if err != nil {
 		fmt.Println("Query Resaponse : ", string(response.Payload))
 	} else {
 		fmt.Println("Error : ", err)
+		return
 	}
 }
