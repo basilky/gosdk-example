@@ -14,15 +14,17 @@ import (
 
 func main() {
 
+	//Initialize SDK for Org1
 	Org1SDK, err := sdkconnector.CreateSDKInstance("Org1")
 	if err != nil {
-		fmt.Println("error creating sdk for Org1 : ", err)
+		fmt.Println("error creating SDK for Org1 : ", err)
 		return
 	}
 
+	//Initialize SDK for Org2
 	Org2SDK, err := sdkconnector.CreateSDKInstance("Org2")
 	if err != nil {
-		fmt.Println("error creating sdk for Org2 : ", err)
+		fmt.Println("error creating SDK for Org2 : ", err)
 	}
 
 	//Register and enroll admin user on Org1
@@ -39,7 +41,7 @@ func main() {
 		return
 	}
 
-	//Register and enroll admn user on Org2
+	//Register and enroll admin user on Org2
 	Org2Admin := &mspclient.RegistrationRequest{
 		Name:           "org2admin",
 		Type:           "admin",
@@ -53,47 +55,54 @@ func main() {
 		return
 	}
 
+	//Create mychannel using org1admin
 	sdkconnector.CreateChennel(Org1SDK, "Org1", "org1admin", "mychannel", "network/channel-artifacts/channel.tx")
 	if err != nil {
 		fmt.Println("error creating channel : ", err)
 		return
 	}
 
+	//Join Org1 peers to mychannel
 	err = sdkconnector.JoinChennel(Org1SDK, "Org1", "org1admin", "mychannel")
 	if err != nil {
 		fmt.Println("error joining Org1 peers to channel : ", err)
 		return
 	}
 
+	//Join Org2 peers to mychannel
 	err = sdkconnector.JoinChennel(Org2SDK, "Org2", "org2admin", "mychannel")
 	if err != nil {
 		fmt.Println("error joining Org2 peers to channel : ", err)
 		return
 	}
 
+	//Install chaincode on Org1 peers
 	err = sdkconnector.InstallCC(Org1SDK, "Org1", "org1admin", "gosdk-example/chaincode/golang", "mycc", "v0")
 	if err != nil {
-		fmt.Println("erro1")
-		return
-	}
-	err = sdkconnector.InstallCC(Org2SDK, "Org2", "org2admin", "gosdk-example/chaincode/golang", "mycc", "v0")
-	if err != nil {
-		fmt.Println("erro2")
+		fmt.Println("Error installing chaincode on Org1 peers : ", err)
 		return
 	}
 
-	// Set up chaincode policy
+	//Install chaincode on Org2 peers
+	err = sdkconnector.InstallCC(Org2SDK, "Org2", "org2admin", "gosdk-example/chaincode/golang", "mycc", "v0")
+	if err != nil {
+		fmt.Println("Error installing chaincode on Org2 peers : ", err)
+		return
+	}
+
+	//Create chaincode policy (this policy requires transactions to be endorsed by member of both Org1 and Org2)
 	ccPolicy := cauthdsl.SignedByNOutOfGivenRole(2, mspproto.MSPRole_MEMBER, []string{"org1.example.com", "org2.example.com"})
+
+	//Instantiate chaincode using Org1 admin identity
 	instCCrequest := resmgmt.InstantiateCCRequest{Name: "mycc", Path: "chaincode/golang", Version: "v0", Args: [][]byte{[]byte("init")}, Policy: ccPolicy}
-	err = sdkconnector.InstantiateCC(Org2SDK, "Org2", "org2admin", "mychannel", instCCrequest)
+	err = sdkconnector.InstantiateCC(Org1SDK, "Org1", "org1admin", "mychannel", instCCrequest)
 	if err != nil {
 		fmt.Println(err, "failed to instantiate the chaincode")
 		return
 	}
-	fmt.Println("Chaincode instantiated")
-
 	fmt.Println("Chaincode Installation & Instantiation Successful")
-	//Register and enroll admn user on Org2
+
+	//Register and enroll normal user on Org2
 	Org2User := &mspclient.RegistrationRequest{
 		Name:           "org2user",
 		Type:           "client",
@@ -107,7 +116,7 @@ func main() {
 		return
 	}
 
-	// Channel client is used to query and execute transactions
+	//Channel client is used to query and execute transactions
 	clientContext := Org2SDK.ChannelContext("mychannel", fabsdk.WithUser("org2user"))
 	client, err := channel.New(clientContext)
 	if err != nil {
@@ -115,6 +124,7 @@ func main() {
 		return
 	}
 
+	//Execute initLedger fabcar transaction
 	res, err := client.Execute(channel.Request{ChaincodeID: "mycc", Fcn: "initLedger", Args: nil, TransientMap: nil}, channel.WithTargetEndpoints("peer0.org1.example.com", "peer0.org2.example.com"))
 	if err != nil {
 		fmt.Println("Transaction success, ID : ", res.TransactionID)
@@ -122,6 +132,8 @@ func main() {
 		fmt.Println("Error execute transaction : ", err)
 		return
 	}
+
+	//Chaincode query queryAllCars function
 	response, err := client.Query(channel.Request{ChaincodeID: "mycc", Fcn: "queryAllCars", Args: [][]byte{}}, channel.WithTargetEndpoints("peer1.org1.example.com"))
 	if err != nil {
 		fmt.Println("Query Response : ", string(response.Payload))
