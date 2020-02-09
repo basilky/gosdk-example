@@ -111,7 +111,7 @@ func main() {
 	}
 	response, err := client.Query(channel.Request{ChaincodeID: "mycc", Fcn: "queryAllCars", Args: [][]byte{}}, channel.WithTargetEndpoints("peer1.org1.example.com"))
 	if err != nil {
-		fmt.Println("Query Resaponse : ", string(response.Payload))
+		fmt.Println("Query Response : ", string(response.Payload))
 	} else {
 		fmt.Println("Error : ", err)
 		return
