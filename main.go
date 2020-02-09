@@ -13,8 +13,19 @@ import (
 )
 
 func main() {
-	Org1SDK, _ := sdkconnector.CreateSDKInstance("Org1")
-	//Register and enroll admn user on Org1
+
+	Org1SDK, err := sdkconnector.CreateSDKInstance("Org1")
+	if err != nil {
+		fmt.Println("error creating sdk for Org1 : ", err)
+		return
+	}
+
+	Org2SDK, err := sdkconnector.CreateSDKInstance("Org2")
+	if err != nil {
+		fmt.Println("error creating sdk for Org2 : ", err)
+	}
+
+	//Register and enroll admin user on Org1
 	Org1Admin := &mspclient.RegistrationRequest{
 		Name:           "org1admin",
 		Type:           "admin",
@@ -22,23 +33,12 @@ func main() {
 		Affiliation:    "org1.department1",
 		CAName:         "ca.org1.example.com",
 	}
-	err := sdkconnector.ResgisterandEnroll(Org1SDK, "Org1", Org1Admin)
+	err = sdkconnector.RegisterandEnroll(Org1SDK, "Org1", Org1Admin)
 	if err != nil {
 		fmt.Println("error on registering and enrolling admin user for Org1 : ", err)
 		return
 	}
-	sdkconnector.CreateChennel(Org1SDK, "Org1", "org1admin", "mychannel", "network/channel-artifacts/channel.tx")
-	if err != nil {
-		fmt.Println("error creating channel : ", err)
-		return
-	}
-	err = sdkconnector.JoinChennel(Org1SDK, "Org1", "org1admin", "mychannel")
-	if err != nil {
-		fmt.Println("error joining Org1 peers to channel : ", err)
-		return
-	}
-	////////////////////////////////
-	Org2SDK, _ := sdkconnector.CreateSDKInstance("Org2")
+
 	//Register and enroll admn user on Org2
 	Org2Admin := &mspclient.RegistrationRequest{
 		Name:           "org2admin",
@@ -47,11 +47,24 @@ func main() {
 		Affiliation:    "org2.department1",
 		CAName:         "ca.org2.example.com",
 	}
-	err = sdkconnector.ResgisterandEnroll(Org2SDK, "Org2", Org2Admin)
+	err = sdkconnector.RegisterandEnroll(Org2SDK, "Org2", Org2Admin)
 	if err != nil {
 		fmt.Println("error on registering and enrolling admin user for Org2 : ", err)
 		return
 	}
+
+	sdkconnector.CreateChennel(Org1SDK, "Org1", "org1admin", "mychannel", "network/channel-artifacts/channel.tx")
+	if err != nil {
+		fmt.Println("error creating channel : ", err)
+		return
+	}
+
+	err = sdkconnector.JoinChennel(Org1SDK, "Org1", "org1admin", "mychannel")
+	if err != nil {
+		fmt.Println("error joining Org1 peers to channel : ", err)
+		return
+	}
+
 	err = sdkconnector.JoinChennel(Org2SDK, "Org2", "org2admin", "mychannel")
 	if err != nil {
 		fmt.Println("error joining Org2 peers to channel : ", err)
@@ -88,7 +101,7 @@ func main() {
 		Affiliation:    "org2.department1",
 		CAName:         "ca.org2.example.com",
 	}
-	err = sdkconnector.ResgisterandEnroll(Org2SDK, "Org2", Org2User)
+	err = sdkconnector.RegisterandEnroll(Org2SDK, "Org2", Org2User)
 	if err != nil {
 		fmt.Println("error on registering and enrolling org2user user for Org2 : ", err)
 		return
