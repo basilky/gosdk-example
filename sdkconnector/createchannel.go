@@ -7,6 +7,7 @@ import (
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
 )
 
+//Create channel. Need organisation name,admin username, channel id and channel config path.
 func CreateChennel(sdk *fabsdk.FabricSDK, orgname string, username string, channelid string, channelconfigpath string) error {
 	resourceManagerClientContext := sdk.Context(fabsdk.WithUser(username), fabsdk.WithOrg(orgname))
 	resMgmtClient, err := resmgmt.New(resourceManagerClientContext)
