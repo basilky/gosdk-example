@@ -26,6 +26,7 @@ func main() {
 	if err != nil {
 		fmt.Println("error creating SDK for Org2 : ", err)
 	}
+	fmt.Println("SDK created for Org1 and Org2")
 
 	//Register and enroll admin user on Org1
 	Org1Admin := &mspclient.RegistrationRequest{
@@ -54,6 +55,7 @@ func main() {
 		fmt.Println("error on registering and enrolling admin user for Org2 : ", err)
 		return
 	}
+	fmt.Println("Enrolled admins for Org1 and Org2")
 
 	//Create mychannel using org1admin
 	sdkconnector.CreateChennel(Org1SDK, "Org1", "org1admin", "mychannel", "network/channel-artifacts/channel.tx")
@@ -61,6 +63,7 @@ func main() {
 		fmt.Println("error creating channel : ", err)
 		return
 	}
+	fmt.Println("Created channel mychannel")
 
 	//Join Org1 peers to mychannel
 	err = sdkconnector.JoinChennel(Org1SDK, "Org1", "org1admin", "mychannel")
@@ -75,6 +78,7 @@ func main() {
 		fmt.Println("error joining Org2 peers to channel : ", err)
 		return
 	}
+	fmt.Println("Joined Org1 and Org2 peers to mychannel")
 
 	//Install chaincode on Org1 peers
 	err = sdkconnector.InstallCC(Org1SDK, "Org1", "org1admin", "gosdk-example/chaincode/golang", "mycc", "v0")
@@ -89,6 +93,7 @@ func main() {
 		fmt.Println("Error installing chaincode on Org2 peers : ", err)
 		return
 	}
+	fmt.Println("Chaincode installed on Org1 and Org2 peers")
 
 	//Create chaincode policy (this policy requires transactions to be endorsed by member of both Org1 and Org2)
 	ccPolicy := cauthdsl.SignedByNOutOfGivenRole(2, mspproto.MSPRole_MEMBER, []string{"org1.example.com", "org2.example.com"})
@@ -100,7 +105,7 @@ func main() {
 		fmt.Println(err, "failed to instantiate the chaincode")
 		return
 	}
-	fmt.Println("Chaincode Installation & Instantiation Successful")
+	fmt.Println("Chaincode instantiation successful")
 
 	//Register and enroll normal user on Org2
 	Org2User := &mspclient.RegistrationRequest{
@@ -115,6 +120,7 @@ func main() {
 		fmt.Println("error on registering and enrolling org2user user for Org2 : ", err)
 		return
 	}
+	fmt.Println("Enrolled normal user on Org2")
 
 	//Channel client is used to query and execute transactions
 	clientContext := Org2SDK.ChannelContext("mychannel", fabsdk.WithUser("org2user"))
@@ -123,6 +129,7 @@ func main() {
 		fmt.Println(err, "failed to create new channel client")
 		return
 	}
+	fmt.Println("Created channel client")
 
 	//Execute initLedger fabcar transaction
 	res, err := client.Execute(channel.Request{ChaincodeID: "mycc", Fcn: "initLedger", Args: nil, TransientMap: nil}, channel.WithTargetEndpoints("peer0.org1.example.com", "peer0.org2.example.com"))
@@ -138,7 +145,7 @@ func main() {
 	if err != nil {
 		fmt.Println("Query Response : ", string(response.Payload))
 	} else {
-		fmt.Println("Error : ", err)
+		fmt.Println("Error queryAllCars: ", err)
 		return
 	}
 }
