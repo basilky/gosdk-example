@@ -16,7 +16,7 @@ description: "Balance Transfer Network"
 #
 version: "1.0"
 logging:
-  level: info
+  level: WARNING
 #
 # The client section will be added on a per org basis see org1.yaml and org2.yaml
 #
@@ -28,7 +28,7 @@ client:
   organization: org1
 
   logging:
-    level: info
+    level: WARNING
 
   # Global configuration for peer, event service and orderer timeouts
   # if this this section is omitted, then default values will be used (same values as below)
