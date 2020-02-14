@@ -132,7 +132,7 @@ func main() {
 	}
 
 	//Execute initLedger fabcar transaction
-	res, err := client.Execute(channel.Request{ChaincodeID: "mycc", Fcn: "initLedger", Args: nil, TransientMap: nil}, channel.WithTargetEndpoints("peer0.org1.example.com", "peer0.org2.example.com"))
+	res, err := client.Execute(channel.Request{ChaincodeID: "mycc", Fcn: "initLedger", Args: nil, TransientMap: nil})
 	if err != nil {
 		fmt.Println("Error execute transaction : ", err)
 		return
@@ -141,11 +141,13 @@ func main() {
 	}
 
 	//Chaincode query queryAllCars function
-	response, err := client.Query(channel.Request{ChaincodeID: "mycc", Fcn: "queryAllCars", Args: [][]byte{}}, channel.WithTargetEndpoints("peer1.org1.example.com"))
+	response, err := client.Query(channel.Request{ChaincodeID: "mycc", Fcn: "queryAllCars", Args: [][]byte{}})
 	if err != nil {
 		fmt.Println("Error queryAllCars: ", err)
 		return
 	} else {
 		fmt.Println("\nQuery Response : ", string(response.Payload))
 	}
+
+	fmt.Println()
 }
