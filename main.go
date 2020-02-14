@@ -96,9 +96,10 @@ func main() {
 	fmt.Println("Chaincode installed on Org1 and Org2 peers")
 
 	//Create chaincode policy (this policy requires transactions to be endorsed by member of both Org1 and Org2)
-	ccPolicy := cauthdsl.SignedByNOutOfGivenRole(2, mspproto.MSPRole_MEMBER, []string{"org1.example.com", "org2.example.com"})
+	ccPolicy := cauthdsl.SignedByNOutOfGivenRole(2, mspproto.MSPRole_MEMBER, []string{"Org1MSP", "Org2MSP"})
 
 	//Instantiate chaincode using Org1 admin identity
+	fmt.Println("Trying to instantiate chaincode...")
 	instCCrequest := resmgmt.InstantiateCCRequest{Name: "mycc", Path: "chaincode/golang", Version: "v0", Args: [][]byte{[]byte("init")}, Policy: ccPolicy}
 	err = sdkconnector.InstantiateCC(Org1SDK, "Org1", "org1admin", "mychannel", instCCrequest)
 	if err != nil {
@@ -129,7 +130,6 @@ func main() {
 		fmt.Println(err, "failed to create new channel client")
 		return
 	}
-	fmt.Println("Created channel client")
 
 	//Execute initLedger fabcar transaction
 	res, err := client.Execute(channel.Request{ChaincodeID: "mycc", Fcn: "initLedger", Args: nil, TransientMap: nil}, channel.WithTargetEndpoints("peer0.org1.example.com", "peer0.org2.example.com"))
