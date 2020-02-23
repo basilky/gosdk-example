@@ -5,7 +5,7 @@ import (
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
 )
 
-//Register and enroll user usng CA
+//Register and enroll user using CA
 func RegisterandEnroll(sdk *fabsdk.FabricSDK, orgname string, r *msp.RegistrationRequest) error {
 	MSPClient, err := msp.New(sdk.Context(), msp.WithOrg(orgname))
 	if err != nil {

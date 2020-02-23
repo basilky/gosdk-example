@@ -1,6 +1,6 @@
 # Hyperledger Go SDK Examples
 
-The aim of this project is to demonstrate hyperledger fabric features using the HF Client SDK for Golang. This repository contains implementation of [Fabcar](https://hyperledger-fabric.readthedocs.io/en/release-1.4/understand_fabcar_network.html) example in Go SDK using the [first-network](https://hyperledger-fabric.readthedocs.io/en/release-1.4/build_network.html).
+The aim of this project is to demonstrate Hyperledger fabric features using the HF Client SDK for Golang. This repository contains implementation of [Fabcar](https://hyperledger-fabric.readthedocs.io/en/release-1.4/understand_fabcar_network.html) example in Go SDK using the [first-network](https://hyperledger-fabric.readthedocs.io/en/release-1.4/build_network.html).
 
 ## TODO
 
@@ -23,7 +23,7 @@ Before start, please make sure that you have all the required [prerequisites](ht
 
 ## What the make command does?
 
-1. Clean cache of prevoius run
+1. Clean cache of previous run
 2. Brings 'first-network' down
 3. Build main.go
 4. Start the first network
