@@ -12,6 +12,8 @@ The aim of this project is to demonstrate Hyperledger fabric features using the 
 - Chaincode support in multiple languages
 - Fabric 2.0 Compatibility
   
+Pulls are welcome!!!
+  
 ## Prerequisites
 
 Before start, please make sure that you have all the required [prerequisites](https://hyperledger-fabric.readthedocs.io/en/release-1.4/prereqs.html) installed.
