@@ -149,5 +149,22 @@ func main() {
 		fmt.Println("\nQuery Response : ", string(response.Payload))
 	}
 
+	//Execute createCar fabcar transaction
+	res, err = client.Execute(channel.Request{ChaincodeID: "mycc", Fcn: "createCar", Args: [][]byte{[]byte("CAR12"), []byte("Honda"), []byte("Accord"), []byte("Black"), []byte("Tom")}, TransientMap: nil})
+	if err != nil {
+		fmt.Println("Error execute transaction : ", err)
+		return
+	} else {
+		fmt.Println("\ncreateCar transaction success, ID : ", res.TransactionID)
+	}
+
+	//Chaincode query queryCar function
+	response, err = client.Query(channel.Request{ChaincodeID: "mycc", Fcn: "queryCar", Args: [][]byte{[]byte("CAR12")}})
+	if err != nil {
+		fmt.Println("Error queryAllCars: ", err)
+		return
+	} else {
+		fmt.Println("\nQuery Response : ", string(response.Payload))
+	}
 	fmt.Println()
 }
