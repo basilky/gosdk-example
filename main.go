@@ -161,10 +161,28 @@ func main() {
 	//Chaincode query queryCar function
 	response, err = client.Query(channel.Request{ChaincodeID: "mycc", Fcn: "queryCar", Args: [][]byte{[]byte("CAR12")}})
 	if err != nil {
-		fmt.Println("Error queryAllCars: ", err)
+		fmt.Println("Error queryCar: ", err)
 		return
 	} else {
-		fmt.Println("\nQuery Response : ", string(response.Payload))
+		fmt.Println("\nQuery 'CAR12' Response : ", string(response.Payload))
+	}
+
+	//Execute changeCarOwner fabcar transaction
+	res, err = client.Execute(channel.Request{ChaincodeID: "mycc", Fcn: "changeCarOwner", Args: [][]byte{[]byte("CAR12"), []byte("Dave")}, TransientMap: nil})
+	if err != nil {
+		fmt.Println("Error execute transaction : ", err)
+		return
+	} else {
+		fmt.Println("\nchangeCarOwner transaction success, ID : ", res.TransactionID)
+	}
+
+	//Chaincode query queryCar function
+	response, err = client.Query(channel.Request{ChaincodeID: "mycc", Fcn: "queryCar", Args: [][]byte{[]byte("CAR12")}})
+	if err != nil {
+		fmt.Println("Error queryCar: ", err)
+		return
+	} else {
+		fmt.Println("\nQuery 'CAR12' Response : ", string(response.Payload))
 	}
 	fmt.Println()
 }
