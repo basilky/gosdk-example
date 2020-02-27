@@ -10,7 +10,7 @@ import (
 )
 
 //Install chaincode on given organization's peers.
-func InstallCC(sdk *fabsdk.FabricSDK, orgname string, username string, chaincodepath string, chaincodename string, chaincodeversion string) error {
+func InstallCC(sdk *fabsdk.FabricSDK, orgname string, username string, chaincodepath string, chaincodename string, chaincodeversion string, purl string) error {
 	resourceManagerClientContext := sdk.Context(fabsdk.WithUser(username), fabsdk.WithOrg(orgname))
 	resMgmtClient, err := resmgmt.New(resourceManagerClientContext)
 	if err != nil {
@@ -20,8 +20,9 @@ func InstallCC(sdk *fabsdk.FabricSDK, orgname string, username string, chaincode
 	if err != nil {
 		return err
 	}
+
 	installCCReq := resmgmt.InstallCCRequest{Name: chaincodename, Path: chaincodepath, Version: chaincodeversion, Package: ccPkg}
-	_, err = resMgmtClient.InstallCC(installCCReq, resmgmt.WithRetry(retry.DefaultResMgmtOpts))
+	_, err = resMgmtClient.InstallCC(installCCReq, resmgmt.WithRetry(retry.DefaultResMgmtOpts), resmgmt.WithTargetFilter(&urlTargetFilter{url: purl}))
 	if err != nil {
 		return err
 	}

@@ -13,7 +13,7 @@ func InstantiateCC(sdk *fabsdk.FabricSDK, orgname string, username string, chann
 	if err != nil {
 		return err
 	}
-	resp, err := resMgmtClient.InstantiateCC(channelname, r)
+	resp, err := resMgmtClient.InstantiateCC(channelname, r, resmgmt.WithTargetFilter(&urlTargetFilter{url: "localhost:7051"}), resmgmt.WithTargetFilter(&urlTargetFilter{url: "localhost:9051"}))
 	if err != nil || resp.TransactionID == "" {
 		return err
 	}

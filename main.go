@@ -81,14 +81,14 @@ func main() {
 	fmt.Println("Joined Org1 and Org2 peers to mychannel")
 
 	//Install chaincode on Org1 peers
-	err = sdkconnector.InstallCC(Org1SDK, "Org1", "org1admin", "gosdk-example/chaincode/golang", "mycc", "v0")
+	err = sdkconnector.InstallCC(Org1SDK, "Org1", "org1admin", "gosdk-example/chaincode/golang", "mycc", "v0", "localhost:7051")
 	if err != nil {
 		fmt.Println("Error installing chaincode on Org1 peers : ", err)
 		return
 	}
 
 	//Install chaincode on Org2 peers
-	err = sdkconnector.InstallCC(Org2SDK, "Org2", "org2admin", "gosdk-example/chaincode/golang", "mycc", "v0")
+	err = sdkconnector.InstallCC(Org2SDK, "Org2", "org2admin", "gosdk-example/chaincode/golang", "mycc", "v0", "localhost:9051")
 	if err != nil {
 		fmt.Println("Error installing chaincode on Org2 peers : ", err)
 		return
