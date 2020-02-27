@@ -6,6 +6,7 @@ The aim of this project is to demonstrate Hyperledger fabric features using the 
 
 - Better documentation
 - Private data collection example
+- Query ledger 
 - Use Raft ordering
 - Web server with APIs for operations
 - Simple web UI

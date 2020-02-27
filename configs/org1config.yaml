@@ -137,7 +137,7 @@ channels:
 
       peer1.org1.example.com:
         endorsingPeer: false
-        chaincodeQuery: true
+        chaincodeQuery: false
         ledgerQuery: true
         eventSource: false
 
@@ -149,7 +149,7 @@ channels:
 
       peer1.org2.example.com:
         endorsingPeer: false
-        chaincodeQuery: true
+        chaincodeQuery: false
         ledgerQuery: true
         eventSource: false
 
@@ -257,7 +257,6 @@ peers:
 
   peer1.org2.example.com:
     url: grpcs://localhost:10051
-    eventUrl: grpcs://localhost:8058
     grpcOptions:
       ssl-target-name-override: peer1.org2.example.com
     tlsCACerts:
