@@ -101,7 +101,8 @@ func main() {
 	//Instantiate chaincode using Org1 admin identity
 	fmt.Println("Trying to instantiate chaincode...")
 	instCCrequest := resmgmt.InstantiateCCRequest{Name: "mycc", Path: "chaincode/golang", Version: "v0", Args: [][]byte{[]byte("init")}, Policy: ccPolicy}
-	err = sdkconnector.InstantiateCC(Org1SDK, "Org1", "org1admin", "mychannel", instCCrequest)
+	peers := []string{"localhost:7051", "localhost:9051"}
+	err = sdkconnector.InstantiateCC(Org1SDK, "Org1", "org1admin", "mychannel", instCCrequest, peers)
 	if err != nil {
 		fmt.Println(err, "failed to instantiate the chaincode")
 		return
