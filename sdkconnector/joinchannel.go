@@ -9,8 +9,8 @@ import (
 )
 
 //Join given organization's peers to channel
-func JoinChennel(sdk *fabsdk.FabricSDK, orgname string, username string, channelname string) error {
-	resourceManagerClientContext := sdk.Context(fabsdk.WithUser(username), fabsdk.WithOrg(orgname))
+func JoinChannel(setup *OrgSetup, orgname string, username string, channelname string) error {
+	resourceManagerClientContext := setup.sdk.Context(fabsdk.WithUser(username), fabsdk.WithOrg(orgname))
 	resMgmtClient, err := resmgmt.New(resourceManagerClientContext)
 	if err != nil {
 		return err

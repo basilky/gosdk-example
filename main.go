@@ -31,7 +31,7 @@ func main() {
 		fmt.Println("Error initializing setup for Org2: ", err)
 	}
 	//Create mychannel using org1admin
-	sdkconnector.CreateChennel(Org1SDK, "Org1", "org1admin", "mychannel", "network/channel-artifacts/channel.tx")
+	sdkconnector.CreateChennel(org1Setup, "mychannel", "network/channel-artifacts/channel.tx")
 	if err != nil {
 		fmt.Println("error creating channel : ", err)
 		return
