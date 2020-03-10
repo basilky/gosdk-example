@@ -2,12 +2,11 @@ package sdkconnector
 
 import (
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/msp"
-	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
 )
 
 //Register and enroll user using CA
-func RegisterandEnroll(sdk *fabsdk.FabricSDK, orgname string, r *msp.RegistrationRequest) error {
-	MSPClient, err := msp.New(sdk.Context(), msp.WithOrg(orgname))
+func RegisterandEnroll(setup OrgSetup, r *msp.RegistrationRequest) error {
+	MSPClient, err := msp.New(setup.sdk.Context(), msp.WithOrg(setup.orgName))
 	if err != nil {
 		return err
 	}

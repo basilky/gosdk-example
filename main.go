@@ -15,43 +15,14 @@ import (
 )
 
 type OrgSetup struct {
-	orgName string
-	adminID string
-	sdk     *fabsdk.FabricSDK
+	orgName   string
+	adminName string
+	sdk       *fabsdk.FabricSDK
 }
 
 func main() {
 
-	org1Setup := OrgSetup{}
-	org1Setup.orgName = "Org1"
-	//Initialize SDK for Org1
-	Org1SDK, err := sdkconnector.CreateSDKInstance("Org1")
-	if err != nil {
-		fmt.Println("error creating SDK for Org1 : ", err)
-		return
-	}
-	org1Setup.sdk = Org1SDK
-	//Initialize SDK for Org2
-	Org2SDK, err := sdkconnector.CreateSDKInstance("Org2")
-	if err != nil {
-		fmt.Println("error creating SDK for Org2 : ", err)
-	}
-	fmt.Println("SDK created for Org1 and Org2")
-
-	//Register and enroll admin user on Org1
-	Org1Admin := &mspclient.RegistrationRequest{
-		Name:           "org1admin",
-		Type:           "admin",
-		MaxEnrollments: 10,
-		Affiliation:    "org1.department1",
-		CAName:         "ca.org1.example.com",
-	}
-	err = sdkconnector.RegisterandEnroll(Org1SDK, "Org1", Org1Admin)
-	if err != nil {
-		fmt.Println("error on registering and enrolling admin user for Org1 : ", err)
-		return
-	}
-	org1Setup.adminID = "Admin"
+	org1Setup, err := sdkconnector.Initialize("Org1")
 
 	//Register and enroll admin user on Org2
 	Org2Admin := &mspclient.RegistrationRequest{
