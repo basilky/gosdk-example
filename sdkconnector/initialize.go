@@ -9,15 +9,15 @@ import (
 )
 
 type OrgSetup struct {
-	orgName   string
-	adminName string
+	OrgName   string
+	AdminName string
 	sdk       *fabsdk.FabricSDK
 }
 
 func Initialize(orgName string) (*OrgSetup, error) {
 	setup := OrgSetup{}
-	setup.orgName = orgName
-	setup.adminName = orgName + "Admin"
+	setup.OrgName = orgName
+	setup.AdminName = orgName + "Admin"
 	//Initialize SDK for Org1
 	sdk, err := CreateSDKInstance(orgName)
 	if err != nil {
@@ -27,13 +27,13 @@ func Initialize(orgName string) (*OrgSetup, error) {
 
 	//Register and enroll admin user on Org1
 	admin := &mspclient.RegistrationRequest{
-		Name:           setup.adminName,
+		Name:           setup.AdminName,
 		Type:           "admin",
 		MaxEnrollments: 10,
-		Affiliation:    strings.ToLower(setup.orgName) + ".department1",
-		CAName:         "ca." + strings.ToLower(setup.orgName) + ".example.com",
+		Affiliation:    strings.ToLower(setup.OrgName) + ".department1",
+		CAName:         "ca." + strings.ToLower(setup.OrgName) + ".example.com",
 	}
-	err = RegisterandEnroll(setup, admin)
+	err = RegisterandEnroll(&setup, admin)
 	if err != nil {
 		return nil, fmt.Errorf("error on registering and enrolling admin user for %s : %s", orgName, err)
 	}

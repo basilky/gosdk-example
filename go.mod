@@ -1,6 +1,7 @@
 go 1.11
 
 require (
+	github.com/chainHero/heroes-service v0.0.0-20180713070811-d482fdf7c80e
 	github.com/hyperledger/fabric v2.0.0+incompatible
 	github.com/hyperledger/fabric-amcl v0.0.0-20200128223036-d1aa2665426a // indirect
 	github.com/hyperledger/fabric-protos-go v0.0.0-20200124220212-e9cfc186ba7b

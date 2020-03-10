@@ -5,8 +5,8 @@ import (
 )
 
 //Register and enroll user using CA
-func RegisterandEnroll(setup OrgSetup, r *msp.RegistrationRequest) error {
-	MSPClient, err := msp.New(setup.sdk.Context(), msp.WithOrg(setup.orgName))
+func RegisterandEnroll(setup *OrgSetup, r *msp.RegistrationRequest) error {
+	MSPClient, err := msp.New(setup.sdk.Context(), msp.WithOrg(setup.OrgName))
 	if err != nil {
 		return err
 	}

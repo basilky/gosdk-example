@@ -9,16 +9,16 @@ import (
 
 //Create channel. Need organization name,admin username, channel id and channel config path.
 func CreateChennel(setup *OrgSetup, channelid string, channelconfigpath string) error {
-	resourceManagerClientContext := setup.sdk.Context(fabsdk.WithUser(setup.adminName), fabsdk.WithOrg(setup.orgName))
+	resourceManagerClientContext := setup.sdk.Context(fabsdk.WithUser(setup.AdminName), fabsdk.WithOrg(setup.OrgName))
 	resMgmtClient, err := resmgmt.New(resourceManagerClientContext)
 	if err != nil {
 		return err
 	}
-	MSPClient, err := msp.New(setup.sdk.Context(), msp.WithOrg(setup.orgName))
+	MSPClient, err := msp.New(setup.sdk.Context(), msp.WithOrg(setup.OrgName))
 	if err != nil {
 		return err
 	}
-	adminIdentity, err := MSPClient.GetSigningIdentity(setup.adminName)
+	adminIdentity, err := MSPClient.GetSigningIdentity(setup.AdminName)
 	if err != nil {
 		return err
 	}
