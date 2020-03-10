@@ -5,7 +5,7 @@ import (
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
 )
 
-// Instantiate the chaincode on all peers.
+//InstantiateCC instantiates the chaincode on given peers.
 func InstantiateCC(sdk *fabsdk.FabricSDK, orgname string, username string, channelname string, r resmgmt.InstantiateCCRequest, p []string) error {
 
 	resourceManagerClientContext := sdk.Context(fabsdk.WithUser(username), fabsdk.WithOrg(orgname))

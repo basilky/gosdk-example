@@ -12,6 +12,7 @@ func (f *urlTargetFilter) Accept(peer fab.Peer) bool {
 	return peer.URL() == f.url
 }
 
+//LoadSetup returns the setup object for the organization name received via API.
 func LoadSetup(orgname string, setups []OrgSetup) *OrgSetup {
 	for _, element := range setups {
 		if element.OrgName == orgname {

@@ -8,7 +8,7 @@ import (
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
 )
 
-//Create SDK instance for given organization.
+//CreateSDKInstance creates SDK instance for given organization.
 func CreateSDKInstance(org string) (*fabsdk.FabricSDK, error) {
 	configpath := filepath.Join("configs", strings.ToLower(org)+"config.yaml")
 	config := config.FromFile(configpath)

@@ -9,7 +9,7 @@ import (
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
 )
 
-//Install chaincode on given organization's peers.
+//InstallCC installs chaincode on given organization's peers.
 func InstallCC(sdk *fabsdk.FabricSDK, orgname string, username string, chaincodepath string, chaincodename string, chaincodeversion string, purl string) error {
 	resourceManagerClientContext := sdk.Context(fabsdk.WithUser(username), fabsdk.WithOrg(orgname))
 	resMgmtClient, err := resmgmt.New(resourceManagerClientContext)

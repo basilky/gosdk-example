@@ -8,7 +8,7 @@ import (
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
 )
 
-//Join given organization's peers to channel
+//JoinChannel joins given organization's peers to channel
 func JoinChannel(setup *OrgSetup, orgname string, username string, channelname string) error {
 	resourceManagerClientContext := setup.sdk.Context(fabsdk.WithUser(username), fabsdk.WithOrg(orgname))
 	resMgmtClient, err := resmgmt.New(resourceManagerClientContext)
