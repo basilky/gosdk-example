@@ -8,17 +8,17 @@ import (
 )
 
 //Create channel. Need organization name,admin username, channel id and channel config path.
-func CreateChennel(sdk *fabsdk.FabricSDK, orgname string, username string, channelid string, channelconfigpath string) error {
-	resourceManagerClientContext := sdk.Context(fabsdk.WithUser(username), fabsdk.WithOrg(orgname))
+func CreateChennel(setup *OrgSetup, channelid string, channelconfigpath string) error {
+	resourceManagerClientContext := setup.sdk.Context(fabsdk.WithUser(setup.adminName), fabsdk.WithOrg(setup.orgName))
 	resMgmtClient, err := resmgmt.New(resourceManagerClientContext)
 	if err != nil {
 		return err
 	}
-	MSPClient, err := msp.New(sdk.Context(), msp.WithOrg(orgname))
+	MSPClient, err := msp.New(setup.sdk.Context(), msp.WithOrg(setup.orgName))
 	if err != nil {
 		return err
 	}
-	adminIdentity, err := MSPClient.GetSigningIdentity(username)
+	adminIdentity, err := MSPClient.GetSigningIdentity(setup.adminName)
 	if err != nil {
 		return err
 	}
@@ -26,7 +26,6 @@ func CreateChennel(sdk *fabsdk.FabricSDK, orgname string, username string, chann
 	txID, err := resMgmtClient.SaveChannel(req, resmgmt.WithOrdererEndpoint("orderer.example.com"))
 	if err != nil || txID.TransactionID == "" {
 		return err
-	} else {
-		return nil
 	}
+	return nil
 }

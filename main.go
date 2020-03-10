@@ -23,22 +23,13 @@ type OrgSetup struct {
 func main() {
 
 	org1Setup, err := sdkconnector.Initialize("Org1")
-
-	//Register and enroll admin user on Org2
-	Org2Admin := &mspclient.RegistrationRequest{
-		Name:           "org2admin",
-		Type:           "admin",
-		MaxEnrollments: 10,
-		Affiliation:    "org2.department1",
-		CAName:         "ca.org2.example.com",
-	}
-	err = sdkconnector.RegisterandEnroll(Org2SDK, "Org2", Org2Admin)
 	if err != nil {
-		fmt.Println("error on registering and enrolling admin user for Org2 : ", err)
-		return
+		fmt.Println("Error initializing setup for Org1: ", err)
 	}
-	fmt.Println("Enrolled admins for Org1 and Org2")
-
+	org2Setup, err := sdkconnector.Initialize("Org2")
+	if err != nil {
+		fmt.Println("Error initializing setup for Org2: ", err)
+	}
 	//Create mychannel using org1admin
 	sdkconnector.CreateChennel(Org1SDK, "Org1", "org1admin", "mychannel", "network/channel-artifacts/channel.tx")
 	if err != nil {
