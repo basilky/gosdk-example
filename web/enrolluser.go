@@ -9,6 +9,8 @@ import (
 	mspclient "github.com/hyperledger/fabric-sdk-go/pkg/client/msp"
 )
 
+//EnrollUser registers and enrolls user to the organization.
+//username and orgname are received through the request.
 func (setups OrgSetupArray) EnrollUser(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseForm(); err != nil {
 		fmt.Fprintf(w, "ParseForm() err: %v", err)
@@ -17,24 +19,20 @@ func (setups OrgSetupArray) EnrollUser(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Post from website! r.PostFrom = %v\n", r.PostForm)
 	username := r.FormValue("username")
 	orgname := r.FormValue("orgname")
-	fmt.Fprintf(w, "Name = %s\n", username)
-	fmt.Fprintf(w, "Address = %s\n", orgname)
 	currentsetup := sdkconnector.LoadSetup(orgname, setups)
 	if currentsetup == nil {
-		return
+		http.Error(w, "Organization '"+orgname+"' does not exist!", 500)
 	}
-	//Register and enroll normal user on Org2
-	Org2User := &mspclient.RegistrationRequest{
+	User := &mspclient.RegistrationRequest{
 		Name:           username,
 		Type:           "client",
 		MaxEnrollments: 10,
 		Affiliation:    strings.ToLower(orgname) + ".department1",
 		CAName:         "ca." + strings.ToLower(orgname) + ".example.com",
 	}
-	err := sdkconnector.RegisterandEnroll(currentsetup, Org2User)
+	err := sdkconnector.RegisterandEnroll(currentsetup, User)
 	if err != nil {
-		fmt.Println("error on registering and enrolling org2user user for Org2 : ", err)
-		return
+		fmt.Fprintf(w, err.Error())
 	}
-	fmt.Println("Enrolled normal user on Org2")
+	fmt.Fprintf(w, "Successfully enrolled user '%s'", username)
 }
