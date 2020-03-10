@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"gosdk-example/sdkconnector"
+	"net/http"
+	"strings"
 
 	mspproto "github.com/hyperledger/fabric-protos-go/msp"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
@@ -12,15 +14,23 @@ import (
 	"github.com/hyperledger/fabric/common/cauthdsl"
 )
 
+type OrgSetup struct {
+	orgName string
+	adminID string
+	sdk     *fabsdk.FabricSDK
+}
+
 func main() {
 
+	org1Setup := OrgSetup{}
+	org1Setup.orgName = "Org1"
 	//Initialize SDK for Org1
 	Org1SDK, err := sdkconnector.CreateSDKInstance("Org1")
 	if err != nil {
 		fmt.Println("error creating SDK for Org1 : ", err)
 		return
 	}
-
+	org1Setup.sdk = Org1SDK
 	//Initialize SDK for Org2
 	Org2SDK, err := sdkconnector.CreateSDKInstance("Org2")
 	if err != nil {
@@ -41,6 +51,7 @@ func main() {
 		fmt.Println("error on registering and enrolling admin user for Org1 : ", err)
 		return
 	}
+	org1Setup.adminID = "Admin"
 
 	//Register and enroll admin user on Org2
 	Org2Admin := &mspclient.RegistrationRequest{
@@ -186,4 +197,33 @@ func main() {
 		fmt.Println("\nQuery 'CAR12' Response : ", string(response.Payload))
 	}
 	fmt.Println()
+
+	http.HandleFunc("/users", org1Setup.EnrollUser)
+	http.ListenAndServe(":3000", nil)
+}
+
+func (orgSetup *OrgSetup) EnrollUser(w http.ResponseWriter, r *http.Request) {
+	if err := r.ParseForm(); err != nil {
+		fmt.Fprintf(w, "ParseForm() err: %v", err)
+		return
+	}
+	fmt.Fprintf(w, "Post from website! r.PostFrom = %v\n", r.PostForm)
+	username := r.FormValue("username")
+	orgname := r.FormValue("orgname")
+	fmt.Fprintf(w, "Name = %s\n", username)
+	fmt.Fprintf(w, "Address = %s\n", orgname)
+	//Register and enroll normal user on Org2
+	Org2User := &mspclient.RegistrationRequest{
+		Name:           username,
+		Type:           "client",
+		MaxEnrollments: 10,
+		Affiliation:    strings.ToLower(orgname) + ".department1",
+		CAName:         "ca." + strings.ToLower(orgname) + ".example.com",
+	}
+	err := sdkconnector.RegisterandEnroll(orgSetup.sdk, orgSetup.orgName, Org2User)
+	if err != nil {
+		fmt.Println("error on registering and enrolling org2user user for Org2 : ", err)
+		return
+	}
+	fmt.Println("Enrolled normal user on Org2")
 }
