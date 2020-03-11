@@ -7,8 +7,8 @@ import (
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
 )
 
-//CreateChennel creates a channel .Need organization setup, channel id and channel config path.
-func CreateChennel(setup *OrgSetup, channelid string, channelconfigpath string) error {
+//CreateChannel creates a channel .Need organization setup, channel id and channel config path.
+func CreateChannel(setup *OrgSetup, channelid string, channelconfigpath string) error {
 	resourceManagerClientContext := setup.sdk.Context(fabsdk.WithUser(setup.AdminName), fabsdk.WithOrg(setup.OrgName))
 	resMgmtClient, err := resmgmt.New(resourceManagerClientContext)
 	if err != nil {

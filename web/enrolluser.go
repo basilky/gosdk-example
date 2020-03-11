@@ -17,22 +17,23 @@ func (setups OrgSetupArray) EnrollUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	fmt.Fprintf(w, "Post from website! r.PostFrom = %v\n", r.PostForm)
-	username := r.FormValue("username")
-	orgname := r.FormValue("orgname")
-	currentsetup := sdkconnector.LoadSetup(orgname, setups)
-	if currentsetup == nil {
-		http.Error(w, "Organization '"+orgname+"' does not exist!", 500)
+	userName := r.FormValue("username")
+	orgName := r.FormValue("orgname")
+	currentSetup := sdkconnector.LoadSetup(orgName, setups)
+	if currentSetup == nil {
+		http.Error(w, "Organization '"+orgName+"' does not exist!", 500)
 	}
-	User := &mspclient.RegistrationRequest{
-		Name:           username,
+	user := &mspclient.RegistrationRequest{
+		Name:           userName,
 		Type:           "client",
 		MaxEnrollments: 10,
-		Affiliation:    strings.ToLower(orgname) + ".department1",
-		CAName:         "ca." + strings.ToLower(orgname) + ".example.com",
+		Affiliation:    strings.ToLower(orgName) + ".department1",
+		CAName:         "ca." + strings.ToLower(orgName) + ".example.com",
 	}
-	err := sdkconnector.RegisterandEnroll(currentsetup, User)
+	err := sdkconnector.RegisterandEnroll(currentSetup, user)
 	if err != nil {
 		fmt.Fprintf(w, err.Error())
+		return
 	}
-	fmt.Fprintf(w, "Successfully enrolled user '%s'", username)
+	fmt.Fprintf(w, "Successfully enrolled user '%s'", userName)
 }
