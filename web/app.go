@@ -13,6 +13,7 @@ type OrgSetupArray []sdkconnector.OrgSetup
 func Serve(setups OrgSetupArray) {
 	http.HandleFunc("/users", setups.EnrollUser)
 	http.HandleFunc("/channel", setups.CreateChannel)
+	http.HandleFunc("/join", setups.JoinChannel)
 	fmt.Println("Listening (http://localhost:3000/) ...")
 	http.ListenAndServe(":3000", nil)
 }
