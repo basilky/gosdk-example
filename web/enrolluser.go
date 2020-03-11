@@ -30,9 +30,13 @@ func (setups OrgSetupArray) EnrollUser(w http.ResponseWriter, r *http.Request) {
 		Affiliation:    strings.ToLower(orgName) + ".department1",
 		CAName:         "ca." + strings.ToLower(orgName) + ".example.com",
 	}
-	err := sdkconnector.RegisterandEnroll(currentSetup, user)
+	status, err := sdkconnector.RegisterandEnroll(currentSetup, user)
 	if err != nil {
 		fmt.Fprintf(w, err.Error())
+		return
+	}
+	if status == 1 {
+		fmt.Fprintf(w, "User '%s' already exists!", userName)
 		return
 	}
 	fmt.Fprintf(w, "Successfully enrolled user '%s'", userName)

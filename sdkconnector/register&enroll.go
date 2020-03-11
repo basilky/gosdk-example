@@ -5,21 +5,26 @@ import (
 )
 
 //RegisterandEnroll registers and enrolls user using Fabric CA
-func RegisterandEnroll(setup *OrgSetup, r *msp.RegistrationRequest) error {
+func RegisterandEnroll(setup *OrgSetup, r *msp.RegistrationRequest) (int, error) {
+
 	MSPClient, err := msp.New(setup.sdk.Context(), msp.WithOrg(setup.OrgName))
 	if err != nil {
-		return err
+		return 0, err
+	}
+	_, err = MSPClient.GetSigningIdentity(r.Name)
+	if err == nil {
+		return 1, nil
 	}
 	secret, err := MSPClient.Register(r)
 	if err != nil {
-		return err
+		return 0, err
 	}
 	err = MSPClient.Enroll(r.Name,
 		msp.WithSecret(secret),
 		msp.WithProfile("tls"),
 	)
 	if err != nil {
-		return err
+		return 0, err
 	}
-	return nil
+	return 2, nil
 }

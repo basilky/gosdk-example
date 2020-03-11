@@ -9,13 +9,13 @@ import (
 )
 
 //JoinChannel joins given organization's peers to channel
-func JoinChannel(setup *OrgSetup, orgname string, username string, channelname string) error {
-	resourceManagerClientContext := setup.sdk.Context(fabsdk.WithUser(username), fabsdk.WithOrg(orgname))
+func JoinChannel(setup *OrgSetup, channelName string) error {
+	resourceManagerClientContext := setup.sdk.Context(fabsdk.WithUser(setup.AdminName), fabsdk.WithOrg(setup.OrgName))
 	resMgmtClient, err := resmgmt.New(resourceManagerClientContext)
 	if err != nil {
 		return err
 	}
-	err = resMgmtClient.JoinChannel(channelname, resmgmt.WithRetry(retry.DefaultResMgmtOpts), resmgmt.WithOrdererEndpoint("orderer.example.com"))
+	err = resMgmtClient.JoinChannel(channelName, resmgmt.WithRetry(retry.DefaultResMgmtOpts), resmgmt.WithOrdererEndpoint("orderer.example.com"))
 	if err != nil {
 		fmt.Println("err", err)
 	}

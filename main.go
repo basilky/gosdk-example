@@ -16,15 +16,7 @@ func main() {
 	if err != nil {
 		fmt.Println("Error initializing setup for Org2: ", err)
 	} /*
-		//Create mychannel using org1admin
-		sdkconnector.CreateChennel(org1Setup, "mychannel", "network/channel-artifacts/channel.tx")
-		if err != nil {
-			fmt.Println("error creating channel : ", err)
-			return
-		}
-		fmt.Println("Created channel mychannel")
-
-		//Join Org1 peers to mychannel
+				//Join Org1 peers to mychannel
 		err = sdkconnector.JoinChannel(Org1SDK, "Org1", "org1admin", "mychannel")
 		if err != nil {
 			fmt.Println("error joining Org1 peers to channel : ", err)

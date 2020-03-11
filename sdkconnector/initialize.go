@@ -32,7 +32,7 @@ func Initialize(orgName string) (*OrgSetup, error) {
 		Affiliation:    strings.ToLower(setup.OrgName) + ".department1",
 		CAName:         "ca." + strings.ToLower(setup.OrgName) + ".example.com",
 	}
-	err = RegisterandEnroll(&setup, admin)
+	_, err = RegisterandEnroll(&setup, admin)
 	if err != nil {
 		return nil, fmt.Errorf("error on registering and enrolling admin user for %s : %s", orgName, err)
 	}
