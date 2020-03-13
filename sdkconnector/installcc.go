@@ -10,8 +10,8 @@ import (
 )
 
 //InstallCC installs chaincode on given organization's peers.
-func InstallCC(sdk *fabsdk.FabricSDK, orgname string, username string, chaincodepath string, chaincodename string, chaincodeversion string, purl string) error {
-	resourceManagerClientContext := sdk.Context(fabsdk.WithUser(username), fabsdk.WithOrg(orgname))
+func InstallCC(setup *OrgSetup, chaincodepath string, chaincodename string, chaincodeversion string, purl string) error {
+	resourceManagerClientContext := setup.sdk.Context(fabsdk.WithUser(setup.AdminName), fabsdk.WithOrg(setup.OrgName))
 	resMgmtClient, err := resmgmt.New(resourceManagerClientContext)
 	if err != nil {
 		return err
