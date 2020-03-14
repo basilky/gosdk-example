@@ -16,36 +16,6 @@ func main() {
 	if err != nil {
 		fmt.Println("Error initializing setup for Org2: ", err)
 	} /*
-				//Join Org1 peers to mychannel
-		err = sdkconnector.JoinChannel(Org1SDK, "Org1", "org1admin", "mychannel")
-		if err != nil {
-			fmt.Println("error joining Org1 peers to channel : ", err)
-			return
-		}
-
-		//Join Org2 peers to mychannel
-		err = sdkconnector.JoinChannel(Org2SDK, "Org2", "org2admin", "mychannel")
-		if err != nil {
-			fmt.Println("error joining Org2 peers to channel : ", err)
-			return
-		}
-		fmt.Println("Joined Org1 and Org2 peers to mychannel")
-
-		//Install chaincode on Org1 peers
-		err = sdkconnector.InstallCC(Org1SDK, "Org1", "org1admin", "gosdk-example/chaincode/golang", "mycc", "v0", "localhost:7051")
-		if err != nil {
-			fmt.Println("Error installing chaincode on Org1 peers : ", err)
-			return
-		}
-
-		//Install chaincode on Org2 peers
-		err = sdkconnector.InstallCC(Org2SDK, "Org2", "org2admin", "gosdk-example/chaincode/golang", "mycc", "v0", "localhost:9051")
-		if err != nil {
-			fmt.Println("Error installing chaincode on Org2 peers : ", err)
-			return
-		}
-		fmt.Println("Chaincode installed on Org1 and Org2 peers")
-
 		//Create chaincode policy (this policy requires transactions to be endorsed by member of both Org1 and Org2)
 		ccPolicy := cauthdsl.SignedByNOutOfGivenRole(2, mspproto.MSPRole_MEMBER, []string{"Org1MSP", "Org2MSP"})
 
