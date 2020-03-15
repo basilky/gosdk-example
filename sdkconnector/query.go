@@ -16,7 +16,7 @@ func Query(setup *OrgSetup, userName string, channelName string, chainCodeName s
 		return nil, err
 	}
 	argsbyte := make([][]byte, len(args))
-	for i, v := range argsbyte {
+	for i, v := range args {
 		argsbyte[i] = []byte(v)
 	}
 	response, err := client.Query(channel.Request{ChaincodeID: chainCodeName, Fcn: function, Args: argsbyte})
