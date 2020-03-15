@@ -12,7 +12,7 @@ func (setups OrgSetupArray) Query(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "ParseForm() err: %v", err)
 		return
 	}
-	fmt.Fprintf(w, "Post from website! r.PostFrom = %v\n", r.PostForm)
+
 	orgName := r.FormValue("orgname")
 	userName := r.FormValue("username")
 	chainCodeName := r.FormValue("chaincodeid")

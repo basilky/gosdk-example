@@ -12,7 +12,7 @@ func (setups OrgSetupArray) InstantiateCC(w http.ResponseWriter, r *http.Request
 		fmt.Fprintf(w, "ParseForm() err: %v", err)
 		return
 	}
-	fmt.Fprintf(w, "Post from website! r.PostFrom = %v\n", r.PostForm)
+
 	orgName := r.FormValue("orgname")
 	channelName := r.FormValue("channelid")
 	chainCodePath := r.FormValue("path")

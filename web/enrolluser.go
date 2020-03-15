@@ -16,7 +16,6 @@ func (setups OrgSetupArray) EnrollUser(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "ParseForm() err: %v", err)
 		return
 	}
-	fmt.Fprintf(w, "Post from website! r.PostFrom = %v\n", r.PostForm)
 	userName := r.FormValue("username")
 	orgName := r.FormValue("orgname")
 	currentSetup := sdkconnector.LoadSetup(orgName, setups)
