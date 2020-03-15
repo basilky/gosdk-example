@@ -70,4 +70,71 @@ curl --request POST \
   --data peer=localhost:7051 \
   --data peer=localhost:9051
 
-echo
+echo -e "\nCall initLedger chaincode function..."
+curl --request POST \
+  --url http://localhost:3000/execute \
+  --header 'content-type: application/x-www-form-urlencoded' \
+  --data orgname=Org1 \
+  --data username=Jim \
+  --data channelid=mychannel \
+  --data chaincodeid=mycc \
+  --data function=initLedger 
+
+echo -e "\nCall queryAllcars chaincode function..."
+curl --request POST \
+  --url http://localhost:3000/query \
+  --header 'content-type: application/x-www-form-urlencoded' \
+  --data orgname=Org2 \
+  --data username=Barry \
+  --data channelid=mychannel \
+  --data chaincodeid=mycc \
+  --data function=queryAllCars
+
+echo -e "\nCall createCar chaincode function..."
+curl --request POST \
+  --url http://localhost:3000/execute \
+  --header 'content-type: application/x-www-form-urlencoded' \
+  --data orgname=Org1 \
+  --data username=Jim \
+  --data channelid=mychannel \
+  --data chaincodeid=mycc \
+  --data function=createCar \
+  --data args=CAR12 \
+  --data args=Honda \
+  --data args=Accord \
+  --data args=Black \
+  --data args=Tom
+
+echo -e "\n Call queryCar chaincode function..."
+curl --request POST \
+  --url http://localhost:3000/query \
+  --header 'content-type: application/x-www-form-urlencoded' \
+  --data orgname=Org2 \
+  --data username=Barry \
+  --data channelid=mychannel \
+  --data chaincodeid=mycc \
+  --data function=queryCar \
+  --data args=CAR12
+
+echo -e "\nCall changeCarOwner chaincode function..."
+curl --request POST \
+  --url http://localhost:3000/execute \
+  --header 'content-type: application/x-www-form-urlencoded' \
+  --data orgname=Org1 \
+  --data username=Jim \
+  --data channelid=mychannel \
+  --data chaincodeid=mycc \
+  --data function=changeCarOwner \
+  --data args=CAR12 \
+  --data args=Dave
+
+echo -e "\n Call queryCar chaincode function..."
+curl --request POST \
+  --url http://localhost:3000/query \
+  --header 'content-type: application/x-www-form-urlencoded' \
+  --data orgname=Org2 \
+  --data username=Barry \
+  --data channelid=mychannel \
+  --data chaincodeid=mycc \
+  --data function=queryCar \
+  --data args=CAR12
