@@ -1,8 +1,6 @@
 package sdkconnector
 
 import (
-	"fmt"
-
 	mspproto "github.com/hyperledger/fabric-protos-go/msp"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt"
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
@@ -12,7 +10,6 @@ import (
 //InstantiateCC instantiates the chaincode on given peers.
 func InstantiateCC(setup *OrgSetup, channelName string, chainCodeName string, chainCodePath string, chainCodeVersion string, peers []string) error {
 	ccPolicy := cauthdsl.SignedByNOutOfGivenRole(2, mspproto.MSPRole_MEMBER, []string{"Org1MSP", "Org2MSP"})
-	fmt.Println("Trying to instantiate chaincode...")
 	instCCRequest := resmgmt.InstantiateCCRequest{Name: chainCodeName, Path: chainCodePath, Version: chainCodeVersion, Args: [][]byte{[]byte("init")}, Policy: ccPolicy}
 	resourceManagerClientContext := setup.sdk.Context(fabsdk.WithUser(setup.AdminName), fabsdk.WithOrg(setup.OrgName))
 	resMgmtClient, err := resmgmt.New(resourceManagerClientContext)

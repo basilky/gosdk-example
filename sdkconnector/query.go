@@ -7,7 +7,7 @@ import (
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
 )
 
-//Query the chaincode
+//Query the chaincode.
 func Query(setup *OrgSetup, userName string, channelName string, chainCodeName string, function string, args []string) (*channel.Response, error) {
 	clientContext := setup.sdk.ChannelContext(channelName, fabsdk.WithUser(userName))
 	client, err := channel.New(clientContext)

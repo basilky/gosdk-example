@@ -7,8 +7,8 @@ import (
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
 )
 
-//CreateChannel creates a channel .Need organization setup, channel id and channel config path.
-func CreateChannel(setup *OrgSetup, channelid string, channelconfigpath string) error {
+//CreateChannel creates a Fabric channel. Need organization setup, channel id and channel config path.
+func CreateChannel(setup *OrgSetup, channelID string, channelConfigPath string) error {
 	resourceManagerClientContext := setup.sdk.Context(fabsdk.WithUser(setup.AdminName), fabsdk.WithOrg(setup.OrgName))
 	resMgmtClient, err := resmgmt.New(resourceManagerClientContext)
 	if err != nil {
@@ -22,7 +22,7 @@ func CreateChannel(setup *OrgSetup, channelid string, channelconfigpath string) 
 	if err != nil {
 		return err
 	}
-	req := resmgmt.SaveChannelRequest{ChannelID: channelid, ChannelConfigPath: channelconfigpath, SigningIdentities: []providersmsp.SigningIdentity{adminIdentity}}
+	req := resmgmt.SaveChannelRequest{ChannelID: channelID, ChannelConfigPath: channelConfigPath, SigningIdentities: []providersmsp.SigningIdentity{adminIdentity}}
 	txID, err := resMgmtClient.SaveChannel(req, resmgmt.WithOrdererEndpoint("orderer.example.com"))
 	if err != nil || txID.TransactionID == "" {
 		return err

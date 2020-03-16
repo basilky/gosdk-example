@@ -8,14 +8,14 @@ import (
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
 )
 
-//OrgSetup contains settings of the organization to interact with the network.
+//OrgSetup contains organization's settings to interact with the network.
 type OrgSetup struct {
 	OrgName   string
 	AdminName string
 	sdk       *fabsdk.FabricSDK
 }
 
-//Initialize the setup of given organization.
+//Initialize the setup for given organization.
 func Initialize(orgName string) (*OrgSetup, error) {
 	setup := OrgSetup{}
 	setup.OrgName = orgName
