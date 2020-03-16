@@ -6,13 +6,12 @@ import (
 	"net/http"
 )
 
-//Query the chaincode
+//Query handles query chaincode API requests.
 func (setups OrgSetupArray) Query(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseForm(); err != nil {
 		fmt.Fprintf(w, "ParseForm() err: %v", err)
 		return
 	}
-
 	orgName := r.FormValue("orgname")
 	userName := r.FormValue("username")
 	chainCodeName := r.FormValue("chaincodeid")

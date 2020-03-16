@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-//JoinChannel joins given organization's peers to the channel
+//JoinChannel handles join channel API requests.
 func (setups OrgSetupArray) JoinChannel(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseForm(); err != nil {
 		fmt.Fprintf(w, "ParseForm() err: %v", err)

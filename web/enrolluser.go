@@ -9,7 +9,7 @@ import (
 	mspclient "github.com/hyperledger/fabric-sdk-go/pkg/client/msp"
 )
 
-//EnrollUser registers and enrolls user to the organization.
+//EnrollUser handles user enrollment API requests.
 //username and orgname are received through the request.
 func (setups OrgSetupArray) EnrollUser(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseForm(); err != nil {

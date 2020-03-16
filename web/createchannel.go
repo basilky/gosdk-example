@@ -6,8 +6,7 @@ import (
 	"net/http"
 )
 
-//CreateChannel creates channel based on the channel ID and
-//channel config path received through the request.
+//CreateChannel handles channel creation API requests.
 func (setups OrgSetupArray) CreateChannel(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseForm(); err != nil {
 		fmt.Fprintf(w, "ParseForm() err: %v", err)

@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-//Execute chaincode function
+//Execute handles chaincode execution API requests.
 func (setups OrgSetupArray) Execute(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseForm(); err != nil {
 		fmt.Fprintf(w, "ParseForm() err: %v", err)

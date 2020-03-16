@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-//InstallCC installs chaincode on given peer
+//InstallCC handles chaincode install API requests.
 func (setups OrgSetupArray) InstallCC(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseForm(); err != nil {
 		fmt.Fprintf(w, "ParseForm() err: %v", err)

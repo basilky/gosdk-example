@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-//InstantiateCC instantiates chaincode on given peers.
+//InstantiateCC handles chaincode instantiate API requests.
 func (setups OrgSetupArray) InstantiateCC(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseForm(); err != nil {
 		fmt.Fprintf(w, "ParseForm() err: %v", err)
