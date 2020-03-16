@@ -28,10 +28,6 @@ func (setups OrgSetupArray) Execute(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, err.Error())
 		return
 	}
-	fmt.Println(response.ChaincodeStatus)
-	fmt.Println(response.Payload)
-	fmt.Println(response.TransactionID)
-	fmt.Println(response.TxValidationCode)
-	fmt.Println(response.Proposal)
-	fmt.Fprintf(w, "Execute response : '%s'", string(response.Payload))
+	fmt.Fprintln(w, "Transaction ID : ", response.TransactionID)
+	fmt.Fprintln(w, "Execute response : \""+string(response.Payload)+"\"")
 }

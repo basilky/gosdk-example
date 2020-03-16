@@ -28,5 +28,5 @@ func (setups OrgSetupArray) Query(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, err.Error())
 		return
 	}
-	fmt.Fprintf(w, "Query response : '%s'", string(response.Payload))
+	fmt.Fprintln(w, "Query response : \""+string(response.Payload)+"\"")
 }
