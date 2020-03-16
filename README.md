@@ -4,14 +4,14 @@ The aim of this project is to demonstrate Hyperledger fabric features using the 
 
 ## TODO
 
-- Better documentation
-- Private data collection example
-- Query ledger 
-- Use Raft ordering
-- Web server with APIs for operations
-- Simple web UI
-- Chaincode support in multiple languages
-- Fabric 2.0 Compatibility
+- [x] Better documentation (done)
+- [ ] Private data collection example
+- [ ] Query ledger 
+- [ ] Use Raft ordering
+- [x] Web server with APIs for operations (done)
+- [ ] Simple web UI
+- [ ] ~~Chaincode support in multiple languages~~ (SDK beta1 release supports Golang chaincode only)
+- [ ] ~~Fabric 2.0 Compatibility~~ (SDK beta1 supports Fabric 1.4 only)
   
 Pulls are welcome!!!
   
