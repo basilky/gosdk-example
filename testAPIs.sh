@@ -58,7 +58,7 @@ curl --request POST \
   --data version=v0 \
   --data peerurl=localhost:9051
 
-echo -e "\nInstantiating chaincode..."
+echo -e "\n\nInstantiating chaincode..."
 curl --request POST \
   --url http://localhost:3000/instantiate \
   --header 'content-type: application/x-www-form-urlencoded' \
@@ -105,7 +105,7 @@ curl --request POST \
   --data args=Black \
   --data args=Tom
 
-echo -e "\n Calling 'queryCar' chaincode function..."
+echo -e "\nCalling 'queryCar' chaincode function..."
 curl --request POST \
   --url http://localhost:3000/query \
   --header 'content-type: application/x-www-form-urlencoded' \
@@ -128,7 +128,7 @@ curl --request POST \
   --data args=CAR12 \
   --data args=Dave
 
-echo -e "\n Calling 'queryCar' chaincode function..."
+echo -e "\nCalling 'queryCar' chaincode function..."
 curl --request POST \
   --url http://localhost:3000/query \
   --header 'content-type: application/x-www-form-urlencoded' \

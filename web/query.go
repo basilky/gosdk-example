@@ -6,13 +6,12 @@ import (
 	"net/http"
 )
 
-//Execute handles chaincode execution API requests.
-func (setups OrgSetupArray) Execute(w http.ResponseWriter, r *http.Request) {
+//Query handles query chaincode API requests.
+func (setups OrgSetupArray) Query(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseForm(); err != nil {
 		fmt.Fprintf(w, "ParseForm() err: %v", err)
 		return
 	}
-
 	orgName := r.FormValue("orgname")
 	userName := r.FormValue("username")
 	chainCodeName := r.FormValue("chaincodeid")
@@ -23,11 +22,10 @@ func (setups OrgSetupArray) Execute(w http.ResponseWriter, r *http.Request) {
 	if currentSetup == nil {
 		http.Error(w, "Organization '"+orgName+"' does not exist!", 500)
 	}
-	response, err := sdkconnector.Execute(currentSetup, userName, channelID, chainCodeName, function, args)
+	response, err := sdkconnector.Query(currentSetup, userName, channelID, chainCodeName, function, args)
 	if err != nil {
 		fmt.Fprintf(w, err.Error())
 		return
 	}
-	fmt.Fprintln(w, "Transaction ID : ", response.TransactionID)
-	fmt.Fprintln(w, "Execute response : \""+string(response.Payload)+"\"")
+	fmt.Fprintln(w, "Response : \""+string(response.Payload)+"\"")
 }
