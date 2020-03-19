@@ -38,7 +38,7 @@ Before start, please make sure that you have all the required prerequisites ([li
 
 ## API requests
 
-Web server supports following requests.testAPIs.sh file contains sample curl requests.
+Web server supports following requests. testAPIs.sh file contains sample curl requests.
 1. User Enrollment
 2. Channel Creation
 3. Join Channel

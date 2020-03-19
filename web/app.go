@@ -3,7 +3,6 @@ package web
 import (
 	"fmt"
 	"gosdk-example/sdkconnector"
-	"log"
 	"net/http"
 )
 
@@ -21,5 +20,7 @@ func Serve(setups OrgSetupArray) {
 	http.HandleFunc("/execute", setups.Execute)
 	fmt.Println("Listening (http://localhost:3000/)...")
 	fmt.Println("Now open another terminal and run testAPIs.sh")
-	log.Fatal(http.ListenAndServe(":3000", nil))
+	if err := http.ListenAndServe(":3000", nil); err != nil {
+		fmt.Println(err)
+	}
 }
