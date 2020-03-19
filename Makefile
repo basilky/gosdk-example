@@ -10,22 +10,23 @@ env-down:
 
 ##### CLEAN
 clean:
-	@echo "Clean ..."
-	@reset
+	@echo "Clean..."
+#@reset
 	@rm -rf store
 
 ##### BUILD
 build:
-	@echo "Go build ..."
+	@echo "Go build..."
 	@go build -o server
 	@echo "Build done"
 
 ##### ENV UP
 env-up:
-	@echo "Start environment ..."
+	@echo "Start environment..."
 	@./startFabric.sh
 
 ##### RUN
 run:
-	@echo "Run  ..."
+	@echo
+	@echo "Run ..."
 	@./server

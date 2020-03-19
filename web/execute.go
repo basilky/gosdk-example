@@ -29,5 +29,5 @@ func (setups OrgSetupArray) Execute(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	fmt.Fprintln(w, "Transaction ID : ", response.TransactionID)
-	fmt.Fprintln(w, "Response : \""+string(response.Payload)+"\"")
+	fmt.Fprintln(w, "Response : '"+string(response.Payload)+"'")
 }

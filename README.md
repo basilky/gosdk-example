@@ -17,7 +17,9 @@ Pulls are welcome!!!
   
 ## Prerequisites
 
-Before start, please make sure that you have all the required [prerequisites](https://hyperledger-fabric.readthedocs.io/en/release-1.4/prereqs.html) installed.
+Before start, please make sure that you have all the required prerequisites ([link1](https://hyperledger-fabric.readthedocs.io/en/release-1.4/prereqs.html),[link2](https://hyperledger-fabric.readthedocs.io/en/release-1.4/install.html)) installed. You also need the following additional packages installed.
+
+1. make (sudo apt install make)
 
 ## How to Run...
 

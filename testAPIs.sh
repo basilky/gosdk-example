@@ -58,7 +58,7 @@ curl --request POST \
   --data version=v0 \
   --data peerurl=localhost:9051
 
-echo -e "\n\nInstantiating chaincode..."
+echo -e "\nInstantiating chaincode..."
 curl --request POST \
   --url http://localhost:3000/instantiate \
   --header 'content-type: application/x-www-form-urlencoded' \
@@ -70,7 +70,7 @@ curl --request POST \
   --data peer=localhost:7051 \
   --data peer=localhost:9051
 
-echo -e "\nCalling 'initLedger' chaincode function..."
+echo -e "\n\nCalling 'initLedger' chaincode function..."
 curl --request POST \
   --url http://localhost:3000/execute \
   --header 'content-type: application/x-www-form-urlencoded' \
