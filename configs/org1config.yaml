@@ -153,13 +153,6 @@ channels:
         ledgerQuery: true
         eventSource: false
 
-    # [Optional]. what chaincodes are expected to exist on this channel? The application can use
-    # this information to validate that the target peers are in the expected state by comparing
-    # this list with the query results of getInstalledChaincodes() and getInstantiatedChaincodes()
-    chaincodes:
-      # the format follows the "cannonical name" of chaincodes by fabric code
-      - mycc:v0
-
 #
 # list of participating organizations in this network
 #
@@ -379,3 +372,19 @@ entityMatchers:
       urlSubstitutionExp: localhost:7050
       sslTargetOverrideUrlSubstitutionExp: orderer.example.com
       mappedHost: orderer.example.com
+    - pattern: orderer2.example.(\w+)
+      urlSubstitutionExp: localhost:8050
+      sslTargetOverrideUrlSubstitutionExp: orderer2.example.com
+      mappedHost: orderer2.example.com
+    - pattern: orderer3.example.(\w+)
+      urlSubstitutionExp: localhost:9050
+      sslTargetOverrideUrlSubstitutionExp: orderer3.example.com
+      mappedHost: orderer3.example.com
+    - pattern: orderer4.example.(\w+)
+      urlSubstitutionExp: localhost:10050
+      sslTargetOverrideUrlSubstitutionExp: orderer4.example.com
+      mappedHost: orderer4.example.com
+    - pattern: orderer5.example.(\w+)
+      urlSubstitutionExp: localhost:11050
+      sslTargetOverrideUrlSubstitutionExp: orderer5.example.com
+      mappedHost: orderer5.example.com
