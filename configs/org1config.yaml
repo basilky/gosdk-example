@@ -226,6 +226,46 @@ orderers:
 
     tlsCACerts:
       path: network/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt
+  orderer2.example.com:
+    url: grpcs://localhost:8050
+
+    # these are standard properties defined by the gRPC library
+    # they will be passed in as-is to gRPC client constructor
+    grpcOptions:
+      ssl-target-name-override: orderer2.example.com
+
+    tlsCACerts:
+      path: network/crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/ca.crt
+  orderer3.example.com:
+    url: grpcs://localhost:9050
+
+    # these are standard properties defined by the gRPC library
+    # they will be passed in as-is to gRPC client constructor
+    grpcOptions:
+      ssl-target-name-override: orderer3.example.com
+
+    tlsCACerts:
+      path: network/crypto-config/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/ca.crt
+  orderer4.example.com:
+    url: grpcs://localhost:10050
+
+    # these are standard properties defined by the gRPC library
+    # they will be passed in as-is to gRPC client constructor
+    grpcOptions:
+      ssl-target-name-override: orderer4.example.com
+
+    tlsCACerts:
+      path: network/crypto-config/ordererOrganizations/example.com/orderers/orderer4.example.com/tls/ca.crt
+  orderer5.example.com:
+    url: grpcs://localhost:11050
+
+    # these are standard properties defined by the gRPC library
+    # they will be passed in as-is to gRPC client constructor
+    grpcOptions:
+      ssl-target-name-override: orderer5.example.com
+
+    tlsCACerts:
+      path: network/crypto-config/ordererOrganizations/example.com/orderers/orderer5.example.com/tls/ca.crt
 
 #
 # List of peers to send various requests to, including endorsement, query
