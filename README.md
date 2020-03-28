@@ -6,8 +6,8 @@ The aim of this project is to demonstrate Hyperledger fabric features using the 
 
 - [x] Better documentation (done)
 - [ ] Private data collection example
-- [ ] Query ledger 
-- [ ] Use Raft ordering
+- [ ] Add query ledger apis
+- [x] Use Raft ordering (done)
 - [x] Web server with APIs for operations (done)
 - [ ] Simple web UI
 - [ ] ~~Chaincode support in multiple languages~~ (SDK v1.0.0-beta1 release supports Golang chaincode only)
@@ -27,6 +27,7 @@ Before start, please make sure that you have all the required prerequisites ([li
 - cd $GOPATH/src/gosdk-example && make
 - Now, a web server will be up and listening on localhost:3000 port.
 - Open a new terminal and run testAPIs.sh
+- This application uses CouchDB database and Raft ordering. This can be changed in the startFabric.sh file.
 
 ## What the make command does?
 
