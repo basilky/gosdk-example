@@ -185,11 +185,11 @@ function networkUp() {
     sleep 9
   fi
 
-  if [ "$CONSENSUS_TYPE" == "etcdraft" ]; then
-    sleep 1
-    echo "Sleeping 15s to allow $CONSENSUS_TYPE cluster to complete booting"
-    sleep 14
-  fi
+  # if [ "$CONSENSUS_TYPE" == "etcdraft" ]; then
+  #   sleep 1
+  #   echo "Sleeping 15s to allow $CONSENSUS_TYPE cluster to complete booting"
+  #   sleep 14
+  # fi
 
   # now run the end to end script
   # docker exec cli scripts/script.sh $CHANNEL_NAME $CLI_DELAY $LANGUAGE $CLI_TIMEOUT $VERBOSE $NO_CHAINCODE
