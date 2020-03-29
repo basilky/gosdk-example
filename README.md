@@ -1,6 +1,6 @@
 # Hyperledger Go SDK Example
 
-The aim of this project is to demonstrate Hyperledger fabric features using the HF Client SDK for Golang. This repository contains implementation of [Fabcar](https://hyperledger-fabric.readthedocs.io/en/release-1.4/understand_fabcar_network.html) example in Go SDK using the [first-network](https://hyperledger-fabric.readthedocs.io/en/release-1.4/build_network.html). SDK v1.0.0-beta1 version is used to run the application.
+The aim of this project is to demonstrate Hyperledger fabric features using the HF Client SDK for Golang. This repository contains implementation of [Fabcar Network](https://hyperledger-fabric.readthedocs.io/en/release-1.4/understand_fabcar_network.html) in Go SDK using the [first-network](https://hyperledger-fabric.readthedocs.io/en/release-1.4/build_network.html), although it is possible to use other chaincode/network setup. Implementation of Fabcar network in NodeJS can be found [here](https://hyperledger-fabric.readthedocs.io/en/release-1.4/write_first_app.html). Go SDK v1.0.0-beta1 version is used to run the application.
 
 ## TODO
 
