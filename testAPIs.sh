@@ -47,7 +47,7 @@ curl --request POST \
   --data version=v0 \
   --data peerurl=localhost:7051
 
-echo -e "\nInstalling chaincode on Org2 peer..."
+echo -e "\nInstalling chaincode on Org2 peer..."z
 curl --request POST \
   --url http://localhost:3000/install \
   --header 'content-type: application/x-www-form-urlencoded' \
@@ -67,6 +67,7 @@ curl --request POST \
   --data path=gosdk-example/chaincode/golang \
   --data name=mycc \
   --data version=v0 \
+  --data policy="AND('Org1MSP.member','Org2MSP.member')" \
   --data peer=localhost:7051 \
   --data peer=localhost:9051
 
