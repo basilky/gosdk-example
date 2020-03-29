@@ -19,11 +19,12 @@ func (setups OrgSetupArray) InstantiateCC(w http.ResponseWriter, r *http.Request
 	chainCodeName := r.FormValue("name")
 	chainCodeVersion := r.FormValue("version")
 	peers := r.Form["peer"]
+	policyString := r.FormValue("policy")
 	currentSetup := sdkconnector.LoadSetup(orgName, setups)
 	if currentSetup == nil {
 		http.Error(w, "Organization '"+orgName+"' does not exist!", 500)
 	}
-	err := sdkconnector.InstantiateCC(currentSetup, channelName, chainCodeName, chainCodePath, chainCodeVersion, peers)
+	err := sdkconnector.InstantiateCC(currentSetup, channelName, chainCodeName, chainCodePath, chainCodeVersion, peers, policyString)
 	if err != nil {
 		fmt.Fprintf(w, err.Error())
 		return
