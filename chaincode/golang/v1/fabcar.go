@@ -195,12 +195,12 @@ func (s *SmartContract) changeCarOwner(APIstub shim.ChaincodeStubInterface, args
 	return shim.Success(nil)
 }
 
-// Deletes an entity from state
+//deleteCar deletes given car from the DB
 func (s *SmartContract) deleteCar(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 	if len(args) != 1 {
 		return shim.Error("Incorrect number of arguments. Expecting 1")
 	}
-	err := APIstub.DelState(args[1])
+	err := APIstub.DelState(args[0])
 	if err != nil {
 		return shim.Error("Failed to delete car : " + err.Error())
 	}

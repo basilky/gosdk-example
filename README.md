@@ -49,3 +49,4 @@ Web server supports following requests. testAPIs.sh file contains sample curl re
 5. Instantiate Chaincode
 6. Execute chaincode
 7. Query chaincode
+8. Upgrade chaincode
