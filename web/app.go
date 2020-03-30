@@ -16,6 +16,7 @@ func Serve(setups OrgSetupArray) {
 	http.HandleFunc("/join", setups.JoinChannel)
 	http.HandleFunc("/install", setups.InstallCC)
 	http.HandleFunc("/instantiate", setups.InstantiateCC)
+	http.HandleFunc("/upgrade", setups.UpgradeCC)
 	http.HandleFunc("/query", setups.Query)
 	http.HandleFunc("/execute", setups.Execute)
 	fmt.Println("Listening (http://localhost:3000/)...")
