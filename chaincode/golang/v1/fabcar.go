@@ -77,6 +77,8 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 		return s.queryAllCars(APIstub)
 	} else if function == "changeCarOwner" {
 		return s.changeCarOwner(APIstub, args)
+	} else if function == "deleteCar" {
+		return s.deleteCar(APIstub, args)
 	}
 
 	return shim.Error("Invalid Smart Contract function name.")

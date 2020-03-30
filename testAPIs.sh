@@ -42,18 +42,18 @@ curl --request POST \
   --header 'content-type: application/x-www-form-urlencoded' \
   --data orgname=Org1 \
   --data channelid=mychannel \
-  --data path=gosdk-example/chaincode/golang \
+  --data path=gosdk-example/chaincode/golang/v0 \
   --data name=mycc \
   --data version=v0 \
   --data peerurl=localhost:7051
 
-echo -e "\nInstalling chaincode on Org2 peer..."z
+echo -e "\nInstalling chaincode on Org2 peer..."
 curl --request POST \
   --url http://localhost:3000/install \
   --header 'content-type: application/x-www-form-urlencoded' \
   --data orgname=Org2 \
   --data channelid=mychannel \
-  --data path=gosdk-example/chaincode/golang \
+  --data path=gosdk-example/chaincode/golang/v0 \
   --data name=mycc \
   --data version=v0 \
   --data peerurl=localhost:9051
@@ -64,7 +64,7 @@ curl --request POST \
   --header 'content-type: application/x-www-form-urlencoded' \
   --data orgname=Org1 \
   --data channelid=mychannel \
-  --data path=gosdk-example/chaincode/golang \
+  --data path=gosdk-example/chaincode/golang/v0 \
   --data name=mycc \
   --data version=v0 \
   --data policy="AND('Org1MSP.member','Org2MSP.member')" \
@@ -138,4 +138,50 @@ curl --request POST \
   --data channelid=mychannel \
   --data chaincodeid=mycc \
   --data function=queryCar \
+  --data args=CAR12
+
+echo -e "\nInstalling new version of chaincode on Org1 peer..."
+curl --request POST \
+  --url http://localhost:3000/install \
+  --header 'content-type: application/x-www-form-urlencoded' \
+  --data orgname=Org1 \
+  --data channelid=mychannel \
+  --data path=gosdk-example/chaincode/golang/v1 \
+  --data name=mycc \
+  --data version=v1 \
+  --data peerurl=localhost:7051
+
+echo -e "\nInstalling new version of chaincode on Org2 peer..."
+curl --request POST \
+  --url http://localhost:3000/install \
+  --header 'content-type: application/x-www-form-urlencoded' \
+  --data orgname=Org2 \
+  --data channelid=mychannel \
+  --data path=gosdk-example/chaincode/golang/v1 \
+  --data name=mycc \
+  --data version=v1 \
+  --data peerurl=localhost:9051
+
+echo -e "\nUpgrading chaincode..."
+curl --request POST \
+  --url http://localhost:3000/upgrade \
+  --header 'content-type: application/x-www-form-urlencoded' \
+  --data orgname=Org1 \
+  --data channelid=mychannel \
+  --data path=gosdk-example/chaincode/golang/v1 \
+  --data name=mycc \
+  --data version=v1 \
+  --data 'policy=AND('\''Org1MSP.member'\'','\''Org2MSP.member'\'')' \
+  --data peer=localhost:7051 \
+  --data peer=localhost:9051
+
+echo -e "\nCalling 'deleteCar' chaincode function..."
+curl --request POST \
+  --url http://localhost:3000/execute \
+  --header 'content-type: application/x-www-form-urlencoded' \
+  --data orgname=Org1 \
+  --data username=Jim \
+  --data channelid=mychannel \
+  --data chaincodeid=mycc \
+  --data function=deleteCar \
   --data args=CAR12
