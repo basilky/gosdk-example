@@ -35,7 +35,9 @@ Before start, please make sure that you have all the required prerequisites ([li
 2. Brings 'first-network' down
 3. Build main.go
 4. Start the first network
-5. Run main.go (Initiate setups of two organizations and starts the web server.)
+5. Run main.go 
+    * Initializes setups of two organizations, with SDK instance and admin user.
+    * Starts the web server on 3000 port.
 
 ## API requests
 
